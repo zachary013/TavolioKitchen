@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:RestoGestApp.ViewModels"
+             xmlns:models="clr-namespace:RestoGestApp.Models"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             x:Class="RestoGestApp.Views.ReservationPage"
+             x:DataType="viewmodels:ReservationViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+                               HorizontalOptions="Center" />
+            
+            <!-- Reservation Form -->
+            <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Make a Reservation" FontAttributes="Bold" FontSize="20" 
+                           TextColor="#29AB87" HorizontalOptions="Center" />
+                    
+                    <Entry Placeholder="Your Name" Text="{Binding CustomerName}" />
+                    
+                    <Entry Placeholder="Phone Number" Text="{Binding ContactPhone}" Keyboard="Telephone" />
+                    
+                    <Label Text="Date" />
+                    <DatePicker Date="{Binding SelectedDate}" MinimumDate="{Binding SelectedDate}" />
+                    
+                    <Label Text="Time" />
+                    <TimePicker Time="{Binding SelectedTime}" />
+                    
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label Text="Table Number" />
+                            <Stepper Minimum="1" Maximum="20" Value="{Binding TableNumber}" />
+                            <Label Text="{Binding TableNumber, StringFormat='Table {0}'}" />
+                        </VerticalStackLayout>
+                        
+                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <Label Text="Number of Guests" />
+                            <Stepper Minimum="1" Maximum="12" Value="{Binding NumberOfGuests}" />
+                            <Label Text="{Binding NumberOfGuests, StringFormat='{0} guests'}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    
+                    <Editor Placeholder="Special Requests (optional)" Text="{Binding SpecialRequests}" 
+                            HeightRequest="100" />
+                    
+                    <Button Text="Make Reservation" BackgroundColor="#29AB87" TextColor="White" 
+                            CornerRadius="25" Command="{Binding CreateReservationCommand}" />
+                </VerticalStackLayout>
+            </Border>
+            
+            <!-- My Reservations -->
+            <Label Text="My Reservations" FontAttributes="Bold" FontSize="18" Margin="0,10,0,0" />
+            
+            <CollectionView ItemsSource="{Binding Reservations}" SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <Label Text="You don't have any reservations yet" TextColor="Gray" 
+                           HorizontalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Reservation">
+                        <Border StrokeShape="RoundRectangle 10" Padding="15" Margin="0,5" BackgroundColor="White">
+                            <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="5">
+                                <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+                                    <Label Grid.Column="0" Text="{Binding CustomerName}" FontAttributes="Bold" FontSize="16" />
+                                    <Label Grid.Column="1" Text="{Binding Status}" TextColor="#29AB87" />
+                                </Grid>
+                                
+                                <VerticalStackLayout Grid.Row="1" Spacing="5">
+                                    <Label Text="{Binding ReservationDate, StringFormat='{0:d}'}" />
+                                    <Label Text="{Binding ReservationTime, StringFormat='{0:t}'}" />
+                                    <Label Text="{Binding TableNumber, StringFormat='Table {0}'}" />
+                                    <Label Text="{Binding NumberOfGuests, StringFormat='{0} guests'}" />
+                                </VerticalStackLayout>
+                                
+                                <Button Grid.Row="2" Text="Cancel Reservation" BackgroundColor="#EEEEEE" 
+                                        TextColor="Black" CornerRadius="20" HeightRequest="35" FontSize="12"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ReservationViewModel}}, Path=CancelReservationCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

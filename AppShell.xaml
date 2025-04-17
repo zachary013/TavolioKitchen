@@ -3,13 +3,50 @@
     x:Class="RestoGestApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:RestoGestApp"
+    xmlns:views="clr-namespace:RestoGestApp.Views"
+    xmlns:converters="clr-namespace:RestoGestApp.Converters"
     Shell.FlyoutBehavior="Flyout"
-    Title="RestoGestApp">
+    Title="TavolioKitchen"
+    BackgroundColor="White"
+    ForegroundColor="#29AB87">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+            <converters:IsGreaterThanZeroConverter x:Key="IsGreaterThanZeroConverter" />
+            <converters:EnumEqualConverter x:Key="EnumEqualConverter" />
+        </ResourceDictionary>
+    </Shell.Resources>
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Menu"
+        Icon="dotnet_bot.png"
+        ContentTemplate="{DataTemplate views:MenuPage}"
+        Route="MenuPage" />
+
+    <ShellContent
+        Title="Cart"
+        Icon="dotnet_bot.png"
+        ContentTemplate="{DataTemplate views:CartPage}"
+        Route="CartPage" />
+
+    <ShellContent
+        Title="Reservations"
+        Icon="dotnet_bot.png"
+        ContentTemplate="{DataTemplate views:ReservationPage}"
+        Route="ReservationPage" />
+
+    <ShellContent
+        Title="Profile"
+        Icon="dotnet_bot.png"
+        ContentTemplate="{DataTemplate views:ProfilePage}"
+        Route="ProfilePage" />
+
+    <ShellContent
+        Title="Reports"
+        Icon="dotnet_bot.png"
+        ContentTemplate="{DataTemplate views:ReportPage}"
+        Route="ReportPage" />
 
 </Shell>

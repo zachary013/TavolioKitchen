@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:RestoGestApp.ViewModels"
+             xmlns:models="clr-namespace:RestoGestApp.Models"
+             x:Class="RestoGestApp.Views.CartPage"
+             x:DataType="viewmodels:CartViewModel"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="*, Auto" Padding="20">
+        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+        
+        <!-- Cart Items List -->
+        <CollectionView Grid.Row="0" ItemsSource="{Binding CartItems}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="Your cart is empty" FontSize="18" TextColor="Gray" />
+                    <Label Text="Add items from the menu" FontSize="14" TextColor="Gray" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:OrderItem">
+                    <Border StrokeShape="RoundRectangle 10" Padding="15" Margin="0,5" BackgroundColor="White">
+                        <Grid ColumnDefinitions="*, Auto, Auto, Auto" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label Text="{Binding MenuItemName}" FontAttributes="Bold" FontSize="16" />
+                                <Label Text="{Binding UnitPrice, StringFormat='€{0:F2}'}" TextColor="#29AB87" />
+                            </VerticalStackLayout>
+                            
+                            <Button Grid.Column="1" Text="-" WidthRequest="40" HeightRequest="40" 
+                                    BackgroundColor="#EEEEEE" TextColor="Black" CornerRadius="20"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CartViewModel}}, Path=DecreaseQuantityCommand}"
+                                    CommandParameter="{Binding .}" />
+                                    
+                            <Label Grid.Column="2" Text="{Binding Quantity}" VerticalOptions="Center" 
+                                   HorizontalOptions="Center" FontAttributes="Bold" />
+                                   
+                            <Button Grid.Column="3" Text="+" WidthRequest="40" HeightRequest="40" 
+                                    BackgroundColor="#29AB87" TextColor="White" CornerRadius="20"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CartViewModel}}, Path=IncreaseQuantityCommand}"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+        <!-- Checkout Section -->
+        <VerticalStackLayout Grid.Row="1" Spacing="15" Padding="0,20,0,0">
+            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="#F5F5F5">
+                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" RowSpacing="10">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Total" FontSize="16" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding TotalAmount, StringFormat='€{0:F2}'}" 
+                           FontAttributes="Bold" FontSize="18" TextColor="#29AB87" />
+                </Grid>
+            </Border>
+            
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Fill">
+                <Button Text="Clear Cart" BackgroundColor="#EEEEEE" TextColor="Black" 
+                        CornerRadius="25" HorizontalOptions="FillAndExpand"
+                        Command="{Binding ClearCartCommand}" />
+                        
+                <Button Text="Checkout" BackgroundColor="#29AB87" TextColor="White" 
+                        CornerRadius="25" HorizontalOptions="FillAndExpand"
+                        Command="{Binding CheckoutCommand}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

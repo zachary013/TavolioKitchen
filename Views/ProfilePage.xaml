@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:RestoGestApp.ViewModels"
+             xmlns:models="clr-namespace:RestoGestApp.Models"
+             x:Class="RestoGestApp.Views.ProfilePage"
+             x:DataType="viewmodels:UserViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+                               HorizontalOptions="Center" />
+            
+            <!-- Login Form -->
+            <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" 
+                    IsVisible="{Binding IsLoggedIn, Converter={StaticResource InvertedBoolConverter}}">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Login" FontAttributes="Bold" FontSize="20" 
+                           TextColor="#29AB87" HorizontalOptions="Center" />
+                    
+                    <Entry Placeholder="Username" Text="{Binding Username}" />
+                    
+                    <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" />
+                    
+                    <Button Text="Login" BackgroundColor="#29AB87" TextColor="White" 
+                            CornerRadius="25" Command="{Binding LoginCommand}" />
+                </VerticalStackLayout>
+            </Border>
+            
+            <!-- User Profile -->
+            <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" 
+                    IsVisible="{Binding IsLoggedIn}">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="My Profile" FontAttributes="Bold" FontSize="20" 
+                           TextColor="#29AB87" HorizontalOptions="Center" />
+                    
+                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="15" ColumnSpacing="15">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Username:" FontAttributes="Bold" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding CurrentUser.Username}" />
+                        
+                        <Label Grid.Row="1" Grid.Column="0" Text="Full Name:" FontAttributes="Bold" />
+                        <Entry Grid.Row="1" Grid.Column="1" Text="{Binding CurrentUser.FullName}" />
+                        
+                        <Label Grid.Row="2" Grid.Column="0" Text="Email:" FontAttributes="Bold" />
+                        <Entry Grid.Row="2" Grid.Column="1" Text="{Binding CurrentUser.Email}" Keyboard="Email" />
+                        
+                        <Label Grid.Row="3" Grid.Column="0" Text="Phone:" FontAttributes="Bold" />
+                        <Entry Grid.Row="3" Grid.Column="1" Text="{Binding CurrentUser.Phone}" Keyboard="Telephone" />
+                        
+                        <Label Grid.Row="4" Grid.Column="0" Text="Role:" FontAttributes="Bold" />
+                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding CurrentUser.Role}" />
+                    </Grid>
+                    
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Fill">
+                        <Button Text="Update Profile" BackgroundColor="#29AB87" TextColor="White" 
+                                CornerRadius="25" HorizontalOptions="FillAndExpand"
+                                Command="{Binding UpdateProfileCommand}" />
+                                
+                        <Button Text="Logout" BackgroundColor="#EEEEEE" TextColor="Black" 
+                                CornerRadius="25" HorizontalOptions="FillAndExpand"
+                                Command="{Binding LogoutCommand}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
