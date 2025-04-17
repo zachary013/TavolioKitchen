@@ -12,13 +12,28 @@ public partial class App : Application
             MainPage = new ContentPage
             {
                 BackgroundColor = Colors.White,
-                Content = new Label
+                Content = new VerticalStackLayout
                 {
-                    Text = "TavolioKitchen",
-                    FontSize = 32,
-                    HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Center,
-                    TextColor = Colors.Green
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = "TavolioKitchen",
+                            FontSize = 32,
+                            TextColor = Colors.Green,
+                            HorizontalOptions = LayoutOptions.Center
+                        },
+                        new Label
+                        {
+                            Text = "Modern Restaurant Management",
+                            FontSize = 18,
+                            TextColor = Colors.Gray,
+                            HorizontalOptions = LayoutOptions.Center,
+                            Margin = new Thickness(0, 10, 0, 20)
+                        }
+                    }
                 }
             };
         }
