@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:RestoGestApp.ViewModels"
+             xmlns:models="clr-namespace:RestoGestApp.Models"
+             x:Class="RestoGestApp.Views.MenuPage"
+             x:DataType="viewmodels:MenuViewModel"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,*" Padding="10">
+        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+        
+        <!-- Categories Tabs -->
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+            <HorizontalStackLayout Spacing="10" Padding="0,0,0,10">
+                <BindableLayout.ItemsSource>
+                    <Binding Path="Categories" />
+                </BindableLayout.ItemsSource>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Border StrokeShape="RoundRectangle 20" Padding="15,8" Margin="0,5">
+                            <Border.Stroke>
+                                <SolidColorBrush Color="#29AB87" />
+                            </Border.Stroke>
+                            <Border.BackgroundColor>
+                                <OnPlatform x:TypeArguments="Color">
+                                    <On Platform="iOS, MacCatalyst" Value="{AppThemeBinding Light=White, Dark=#1C1C1E}" />
+                                </OnPlatform>
+                            </Border.BackgroundColor>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MenuViewModel}}, Path=LoadMenuItemsCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{Binding .}" 
+                                   TextColor="{AppThemeBinding Light=#29AB87, Dark=#29AB87}"
+                                   FontAttributes="Bold" />
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+        </ScrollView>
+        
+        <!-- Menu Items Grid -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding MenuItems}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="10" VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="No items available" FontSize="18" TextColor="Gray" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:MenuItemModel">
+                    <Border StrokeShape="RoundRectangle 10" Padding="10" BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
+                        </Border.Shadow>
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+                            <Image Grid.Row="0" Source="{Binding ImagePath}" Aspect="AspectFill" 
+                                   HeightRequest="120" WidthRequest="120" HorizontalOptions="Center" />
+                            <Label Grid.Row="1" Text="{Binding Name}" FontAttributes="Bold" FontSize="16" 
+                                   HorizontalOptions="Center" />
+                            <Label Grid.Row="2" Text="{Binding Description}" FontSize="12" TextColor="Gray" 
+                                   MaxLines="2" LineBreakMode="TailTruncation" />
+                            <Label Grid.Row="3" Text="{Binding Price, StringFormat='€{0:F2}'}" FontAttributes="Bold" 
+                                   TextColor="#29AB87" HorizontalOptions="Center" />
+                            <Button Grid.Row="4" Text="Add to Cart" BackgroundColor="#29AB87" TextColor="White" 
+                                    CornerRadius="20" HeightRequest="35" FontSize="12"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MenuViewModel}}, Path=AddToCartCommand}"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

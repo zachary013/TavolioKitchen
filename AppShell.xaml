@@ -4,12 +4,27 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RestoGestApp"
-    Shell.FlyoutBehavior="Flyout"
-    Title="RestoGestApp">
+    xmlns:views="clr-namespace:RestoGestApp.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="TavolioKitchen"
+    BackgroundColor="White"
+    ForegroundColor="#29AB87">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <TabBar>
+        <Tab Title="Menu" Icon="menu_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+        
+        <Tab Title="Cart" Icon="cart_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:CartPage}" />
+        </Tab>
+        
+        <Tab Title="Reservations" Icon="reservation_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" />
+        </Tab>
+        
+        <Tab Title="Profile" Icon="profile_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
+        </Tab>
+    </TabBar>
 </Shell>

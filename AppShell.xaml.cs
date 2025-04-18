@@ -1,4 +1,4 @@
-﻿namespace RestoGestApp;
+namespace RestoGestApp;
 
 public partial class AppShell : Shell
 {

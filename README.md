@@ -1,13 +1,16 @@
 # RestoGestApp
 
-RestoGestApp is a cross-platform restaurant management application built with .NET MAUI (Multi-platform App UI). This application is designed to help restaurant owners and staff manage their operations efficiently across multiple platforms including iOS, macOS (via Catalyst), and Windows.
+RestoGestApp is a cross-platform restaurant management application built with .NET MAUI (Multi-platform App UI). This application is designed to help restaurant owners and staff manage their operations efficiently across multiple platforms including iOS and macOS (via Catalyst).
 
 ## Features
 
-- Cross-platform support (iOS, macOS, Windows)
-- Modern UI with XAML-based interface
-- Responsive design that works across different device form factors
-- Dark/Light theme support
+- Menu management with categories, dishes, prices, and images
+- Order system with cart and checkout
+- Table reservations
+- User profiles (clients/personnel)
+- Notifications via alerts
+- Simulated payments
+- Statistics/reports (total revenue, orders, reservations)
 
 ## Technologies Used
 
@@ -15,77 +18,79 @@ RestoGestApp is a cross-platform restaurant management application built with .N
 - **C#**: Primary programming language
 - **.NET 9**: Latest .NET framework
 - **XAML**: For designing the user interface
-
-## Getting Started
-
-### Prerequisites
-
-- [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) or [Visual Studio Code](https://code.visualstudio.com/) with MAUI workload
-- For iOS/macOS development: Mac with Xcode 15+
-- For Windows development: Windows 10/11 with Windows App SDK
-
-### Installation
-
-1. Clone the repository
-   ```
-   git clone https://github.com/yourusername/RestoGestApp.git
-   cd RestoGestApp
-   ```
-
-2. Restore dependencies
-   ```
-   dotnet restore
-   ```
-
-3. Build the application
-   ```
-   dotnet build
-   ```
-
-4. Run the application for your target platform
-   ```
-   dotnet run -f net9.0-ios            # For iOS
-   dotnet run -f net9.0-maccatalyst    # For macOS
-   dotnet run -f net9.0-windows        # For Windows
-   ```
-
-## Usage
-
-RestoGestApp provides an intuitive interface for restaurant management. The application is currently in development, with more features to be added soon.
+- **SQLite**: For local database storage
+- **MVVM Pattern**: Using CommunityToolkit.Mvvm
 
 ## Project Structure
 
 ```
 RestoGestApp/
-├── App.xaml                  # Application definition
-├── AppShell.xaml             # Shell navigation container
-├── MainPage.xaml             # Main application page
-├── MauiProgram.cs            # MAUI application entry point
-├── Platforms/                # Platform-specific code
-│   ├── iOS/                  # iOS-specific code
-│   ├── MacCatalyst/          # macOS-specific code
-│   └── Windows/              # Windows-specific code
-├── Resources/                # Application resources
-│   ├── AppIcon/              # Application icons
-│   ├── Fonts/                # Custom fonts
-│   ├── Images/               # Image assets
-│   ├── Raw/                  # Raw assets
-│   ├── Splash/               # Splash screen assets
-│   └── Styles/               # XAML styles
-└── RestoGestApp.csproj       # Project file
+├── Models/                # Data models
+│   ├── MenuItem.cs        # Menu item model
+│   ├── Order.cs           # Order model
+│   ├── OrderItem.cs       # Order item model
+│   ├── Reservation.cs     # Reservation model
+│   ├── User.cs            # User model
+│   └── Report.cs          # Report model
+├── Services/              # Business logic services
+│   ├── DataService.cs     # SQLite database service
+│   ├── NotificationService.cs # Notification service
+│   └── PaymentService.cs  # Payment processing service
+├── ViewModels/            # MVVM ViewModels
+│   ├── BaseViewModel.cs   # Base ViewModel
+│   ├── MenuViewModel.cs   # Menu ViewModel
+│   ├── CartViewModel.cs   # Cart ViewModel
+│   ├── ReservationViewModel.cs # Reservation ViewModel
+│   ├── UserViewModel.cs   # User ViewModel
+│   └── ReportViewModel.cs # Report ViewModel
+├── Views/                 # XAML UI pages
+│   ├── MenuPage.xaml      # Menu page
+│   ├── CartPage.xaml      # Cart page
+│   ├── ReservationPage.xaml # Reservation page
+│   ├── ProfilePage.xaml   # Profile page
+│   └── ReportPage.xaml    # Report page
+├── Converters/            # Value converters
+│   └── BooleanConverters.cs # Boolean converters
+├── Resources/             # App resources
+│   └── Images/            # Image assets
+├── App.xaml               # Application definition
+├── AppShell.xaml          # Shell navigation container
+└── MauiProgram.cs         # MAUI application entry point
 ```
 
-## License
+## Run Instructions
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Prerequisites
 
-## Contributing
+- [.NET 9 SDK](https://dotnet.microsoft.com/download)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) or [JetBrains Rider](https://www.jetbrains.com/rider/) with MAUI workload
+- For iOS/macOS development: Mac with Xcode 15+
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### Running on iOS
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Open the solution in Rider or Visual Studio
+2. Select the iOS target
+3. Build and run the application
+4. Alternatively, use the command line:
+   ```
+   dotnet build -t:Run -f net9.0-ios
+   ```
+
+### Running on MacCatalyst
+
+1. Open the solution in Rider or Visual Studio
+2. Select the MacCatalyst target
+3. Build and run the application
+4. Alternatively, use the command line:
+   ```
+   dotnet build -t:Run -f net9.0-maccatalyst
+   ```
+
+## Default Login Credentials
+
+The application is seeded with the following user accounts:
+
+- **Admin**: Username: `admin`, Password: `admin123`
+- **Manager**: Username: `manager`, Password: `manager123`
+- **Staff**: Username: `staff1`, Password: `staff123`
+- **Client**: Username: `client1`, Password: `client123`
