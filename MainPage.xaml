@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RestoGestApp.MainPage">
+             x:Class="RestoGestApp.MainPage"
+             Title="Menu">
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="TavolioKitchen logo"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="TavolioKitchen"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center"
-                TextColor="#29AB87" />
-
-            <Label
-                Text="Modern Restaurant Management"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Modern Restaurant Management"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Get Started"
-                SemanticProperties.Hint="Start using the application"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center"
-                BackgroundColor="#29AB87"
-                TextColor="White" />
-
+        <VerticalStackLayout Spacing="25" Padding="20">
+            <!-- Header -->
+            <VerticalStackLayout Spacing="5" Margin="0,10,0,20">
+                <Label 
+                    Text="TavolioKitchen"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    TextColor="#29AB87"
+                    HorizontalOptions="Center" />
+                
+                <Label 
+                    Text="Delicious Food, Delivered"
+                    FontSize="18"
+                    TextColor="Gray"
+                    HorizontalOptions="Center" />
+            </VerticalStackLayout>
+            
+            <!-- Categories -->
+            <Label 
+                Text="Categories"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="Black" />
+                
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout x:Name="CategoriesLayout" Spacing="15" HorizontalOptions="Start">
+                    <!-- Categories will be added here dynamically -->
+                </HorizontalStackLayout>
+            </ScrollView>
+            
+            <!-- Menu Items -->
+            <Label 
+                Text="Menu Items"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="Black"
+                Margin="0,10,0,0" />
+                
+            <VerticalStackLayout x:Name="MenuItemsLayout" Spacing="15">
+                <!-- Menu items will be added here dynamically -->
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

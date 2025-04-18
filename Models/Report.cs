@@ -2,7 +2,7 @@ namespace RestoGestApp.Models;
 
 public class Report
 {
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Now;
     
     public decimal TotalRevenue { get; set; }
     

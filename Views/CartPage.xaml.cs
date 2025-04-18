@@ -1,12 +1,9 @@
-using RestoGestApp.ViewModels;
-
 namespace RestoGestApp.Views;
 
 public partial class CartPage : ContentPage
 {
-    public CartPage(CartViewModel viewModel)
+    public CartPage()
     {
         InitializeComponent();
-        BindingContext = viewModel;
     }
 }

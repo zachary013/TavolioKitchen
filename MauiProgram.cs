@@ -19,6 +19,7 @@ public static class MauiProgram
             });
 
         // Register services
+        builder.Services.AddSingleton<DatabaseService>();
         builder.Services.AddSingleton<DataService>();
         builder.Services.AddSingleton<NotificationService>();
         builder.Services.AddSingleton<PaymentService>();
@@ -31,7 +32,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ReportViewModel>();
         
         // Register views
-        builder.Services.AddSingleton<MenuPage>();
+        builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<CartPage>();
         builder.Services.AddSingleton<ReservationPage>();
         builder.Services.AddSingleton<ProfilePage>();

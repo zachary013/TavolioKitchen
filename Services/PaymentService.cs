@@ -13,56 +13,63 @@ public class PaymentService
     
     public async Task<bool> ProcessPaymentAsync(Order order, string paymentMethod)
     {
-        // This is a simulated payment process
-        await Task.Delay(2000); // Simulate processing time
+        // This is a mock implementation for demonstration purposes
+        // In a real app, you would integrate with a payment gateway
         
-        // Simulate a successful payment (in a real app, this would integrate with a payment gateway)
-        var isSuccessful = true;
-        
-        if (isSuccessful)
+        try
         {
-            await _notificationService.ShowAlertAsync("Payment Successful", 
-                $"Your payment of ${order.TotalAmount} has been processed successfully.");
+            // Simulate payment processing delay
+            await Task.Delay(1000);
             
-            // Update the order status
-            order.IsPaid = true;
-            order.Status = OrderStatus.Completed;
+            // Simulate payment success (90% of the time)
+            var isSuccessful = new Random().NextDouble() < 0.9;
             
-            return true;
+            if (isSuccessful)
+            {
+                order.IsPaid = true;
+                await _notificationService.ShowToastAsync($"Payment of {order.TotalAmount:C} processed successfully via {paymentMethod}");
+                return true;
+            }
+            else
+            {
+                await _notificationService.ShowAlertAsync("Payment Failed", "Your payment could not be processed. Please try again or use a different payment method.");
+                return false;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await _notificationService.ShowAlertAsync("Payment Failed", 
-                "There was an error processing your payment. Please try again.");
-            
+            await _notificationService.ShowAlertAsync("Payment Error", $"An error occurred while processing your payment: {ex.Message}");
             return false;
         }
     }
     
     public async Task<bool> RefundPaymentAsync(Order order)
     {
-        // This is a simulated refund process
-        await Task.Delay(2000); // Simulate processing time
+        // This is a mock implementation for demonstration purposes
         
-        // Simulate a successful refund (in a real app, this would integrate with a payment gateway)
-        var isSuccessful = true;
-        
-        if (isSuccessful)
+        try
         {
-            await _notificationService.ShowAlertAsync("Refund Successful", 
-                $"Your refund of ${order.TotalAmount} has been processed successfully.");
+            // Simulate refund processing delay
+            await Task.Delay(1000);
             
-            // Update the order status
-            order.IsPaid = false;
-            order.Status = OrderStatus.Cancelled;
+            // Simulate refund success (95% of the time)
+            var isSuccessful = new Random().NextDouble() < 0.95;
             
-            return true;
+            if (isSuccessful)
+            {
+                order.IsPaid = false;
+                await _notificationService.ShowToastAsync($"Refund of {order.TotalAmount:C} processed successfully");
+                return true;
+            }
+            else
+            {
+                await _notificationService.ShowAlertAsync("Refund Failed", "Your refund could not be processed. Please contact customer support.");
+                return false;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await _notificationService.ShowAlertAsync("Refund Failed", 
-                "There was an error processing your refund. Please try again.");
-            
+            await _notificationService.ShowAlertAsync("Refund Error", $"An error occurred while processing your refund: {ex.Message}");
             return false;
         }
     }
