@@ -11,19 +11,39 @@
     ForegroundColor="#29AB87">
 
     <TabBar>
-        <Tab Title="Menu" Icon="menu_icon.png">
+        <Tab Title="Menu">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FontAwesome" 
+                                 Glyph="&#xf0f5;" 
+                                 Color="#29AB87" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
         
-        <Tab Title="Cart" Icon="cart_icon.png">
+        <Tab Title="Cart">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FontAwesome" 
+                                 Glyph="&#xf07a;" 
+                                 Color="#29AB87" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:CartPage}" />
         </Tab>
         
-        <Tab Title="Reservations" Icon="reservation_icon.png">
+        <Tab Title="Reservations">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FontAwesome" 
+                                 Glyph="&#xf274;" 
+                                 Color="#29AB87" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" />
         </Tab>
         
-        <Tab Title="Profile" Icon="profile_icon.png">
+        <Tab Title="Profile">
+            <Tab.Icon>
+                <FontImageSource FontFamily="FontAwesome" 
+                                 Glyph="&#xf007;" 
+                                 Color="#29AB87" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
         </Tab>
     </TabBar>
