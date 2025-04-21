@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RestoGestApp"
     xmlns:views="clr-namespace:RestoGestApp.Views"
+    xmlns:fonts="clr-namespace:RestoGestApp.Resources.Fonts"
     Shell.FlyoutBehavior="Disabled"
     Title="TavolioKitchen"
     BackgroundColor="White"
@@ -13,36 +14,40 @@
     <TabBar>
         <Tab Title="Menu">
             <Tab.Icon>
-                <FontImageSource FontFamily="FontAwesome" 
-                                 Glyph="&#xf0f5;" 
-                                 Color="#29AB87" />
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.RestaurantMenu}"
+                                 Color="#29AB87"
+                                 Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
-        
+
         <Tab Title="Cart">
             <Tab.Icon>
-                <FontImageSource FontFamily="FontAwesome" 
-                                 Glyph="&#xf07a;" 
-                                 Color="#29AB87" />
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.ShoppingCart}"
+                                 Color="#29AB87"
+                                 Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:CartPage}" />
         </Tab>
-        
+
         <Tab Title="Reservations">
             <Tab.Icon>
-                <FontImageSource FontFamily="FontAwesome" 
-                                 Glyph="&#xf274;" 
-                                 Color="#29AB87" />
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.EventAvailable}"
+                                 Color="#29AB87"
+                                 Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" />
         </Tab>
-        
+
         <Tab Title="Profile">
             <Tab.Icon>
-                <FontImageSource FontFamily="FontAwesome" 
-                                 Glyph="&#xf007;" 
-                                 Color="#29AB87" />
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.AccountCircle}"
+                                 Color="#29AB87"
+                                 Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
         </Tab>
