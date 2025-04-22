@@ -12,7 +12,7 @@
                     Text="Make a Reservation"
                     FontSize="28"
                     FontAttributes="Bold"
-                    TextColor="#29AB87"
+                    TextColor="#FEBE10"
                     HorizontalOptions="Center" />
             </VerticalStackLayout>
 
@@ -48,7 +48,7 @@
 
                     <Editor Placeholder="Special Requests (optional)" HeightRequest="100" />
 
-                    <Button Text="Make Reservation" BackgroundColor="#29AB87" TextColor="White" CornerRadius="25" />
+                    <Button Text="Make Reservation" BackgroundColor="#FEBE10" TextColor="White" CornerRadius="25" />
                 </VerticalStackLayout>
             </Border>
 
@@ -63,7 +63,7 @@
                 <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="10">
                     <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
                         <Label Grid.Column="0" Text="Reservation #1234" FontAttributes="Bold" FontSize="18" />
-                        <Label Grid.Column="1" Text="Confirmed" TextColor="#29AB87" FontAttributes="Bold" />
+                        <Label Grid.Column="1" Text="Confirmed" TextColor="#FEBE10" FontAttributes="Bold" />
                     </Grid>
 
                     <VerticalStackLayout Grid.Row="1" Spacing="5">

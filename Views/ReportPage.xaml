@@ -21,7 +21,7 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Generate Report" FontAttributes="Bold" FontSize="18"
-                           TextColor="#29AB87" HorizontalOptions="Center" />
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
 
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                         <VerticalStackLayout Grid.Column="0" Spacing="5">
@@ -35,7 +35,7 @@
                         </VerticalStackLayout>
                     </Grid>
 
-                    <Button Text="Generate Report" BackgroundColor="#29AB87" TextColor="White"
+                    <Button Text="Generate Report" BackgroundColor="#FEBE10" TextColor="White"
                             CornerRadius="25" Command="{Binding GenerateReportCommand}" />
                 </VerticalStackLayout>
             </Border>
@@ -48,7 +48,7 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Report Summary" FontAttributes="Bold" FontSize="18"
-                           TextColor="#29AB87" HorizontalOptions="Center" />
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
 
                     <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto" RowSpacing="10" ColumnSpacing="15">
                         <Label Grid.Row="0" Grid.Column="0" Text="Total Revenue:" FontAttributes="Bold" />
@@ -71,7 +71,7 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Revenue by Category" FontAttributes="Bold" FontSize="18"
-                           TextColor="#29AB87" HorizontalOptions="Center" />
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
 
                     <CollectionView ItemsSource="{Binding RevenueByCategoryItems}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
@@ -94,7 +94,7 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Orders by Status" FontAttributes="Bold" FontSize="18"
-                           TextColor="#29AB87" HorizontalOptions="Center" />
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
 
                     <CollectionView ItemsSource="{Binding OrdersByStatusItems}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
@@ -117,7 +117,7 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Top Selling Items" FontAttributes="Bold" FontSize="18"
-                           TextColor="#29AB87" HorizontalOptions="Center" />
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
 
                     <CollectionView ItemsSource="{Binding TopSellingItems}" SelectionMode="None">
                         <CollectionView.ItemTemplate>

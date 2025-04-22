@@ -12,7 +12,7 @@
                     Text="TavolioKitchen"
                     FontSize="32"
                     FontAttributes="Bold"
-                    TextColor="#29AB87"
+                    TextColor="#FEBE10"
                     HorizontalOptions="Center" />
 
                 <Label

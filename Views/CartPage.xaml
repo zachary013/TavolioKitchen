@@ -14,7 +14,7 @@
                         Text="Your Cart"
                         FontSize="28"
                         FontAttributes="Bold"
-                        TextColor="#29AB87"
+                        TextColor="#FEBE10"
                         HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 
@@ -23,7 +23,7 @@
                     <Image Source="cart_icon.png" HeightRequest="100" />
                     <Label Text="Your cart is empty" FontSize="20" TextColor="Gray" HorizontalOptions="Center" />
                     <Label Text="Add items from the menu" FontSize="16" TextColor="Gray" HorizontalOptions="Center" />
-                    <Button Text="Browse Menu" BackgroundColor="#29AB87" TextColor="White" CornerRadius="20" Margin="0,20,0,0" />
+                    <Button Text="Browse Menu" BackgroundColor="#FEBE10" TextColor="White" CornerRadius="20" Margin="0,20,0,0" />
                 </VerticalStackLayout>
                 
                 <!-- Cart Item 1 -->
@@ -35,12 +35,12 @@
                         <Image Grid.RowSpan="2" Grid.Column="0" Source="dotnet_bot.png" WidthRequest="60" HeightRequest="60" />
                         
                         <Label Grid.Row="0" Grid.Column="1" Text="Margherita Pizza" FontAttributes="Bold" FontSize="16" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="€8.90" TextColor="#29AB87" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="€8.90" TextColor="#FEBE10" FontAttributes="Bold" />
                         
                         <HorizontalStackLayout Grid.RowSpan="2" Grid.Column="2" Spacing="10" VerticalOptions="Center">
                             <Button Text="-" WidthRequest="40" HeightRequest="40" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" FontSize="16" />
                             <Label Text="1" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" />
-                            <Button Text="+" WidthRequest="40" HeightRequest="40" BackgroundColor="#29AB87" TextColor="White" CornerRadius="20" FontSize="16" />
+                            <Button Text="+" WidthRequest="40" HeightRequest="40" BackgroundColor="#FEBE10" TextColor="White" CornerRadius="20" FontSize="16" />
                         </HorizontalStackLayout>
                     </Grid>
                 </Border>
@@ -54,12 +54,12 @@
                         <Image Grid.RowSpan="2" Grid.Column="0" Source="dotnet_bot.png" WidthRequest="60" HeightRequest="60" />
                         
                         <Label Grid.Row="0" Grid.Column="1" Text="Greek Salad" FontAttributes="Bold" FontSize="16" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="€4.90" TextColor="#29AB87" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="€4.90" TextColor="#FEBE10" FontAttributes="Bold" />
                         
                         <HorizontalStackLayout Grid.RowSpan="2" Grid.Column="2" Spacing="10" VerticalOptions="Center">
                             <Button Text="-" WidthRequest="40" HeightRequest="40" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" FontSize="16" />
                             <Label Text="1" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" />
-                            <Button Text="+" WidthRequest="40" HeightRequest="40" BackgroundColor="#29AB87" TextColor="White" CornerRadius="20" FontSize="16" />
+                            <Button Text="+" WidthRequest="40" HeightRequest="40" BackgroundColor="#FEBE10" TextColor="White" CornerRadius="20" FontSize="16" />
                         </HorizontalStackLayout>
                     </Grid>
                 </Border>
@@ -71,13 +71,13 @@
             <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="#f8f8f8">
                 <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" RowSpacing="10">
                     <Label Grid.Row="0" Grid.Column="0" Text="Total" FontSize="16" />
-                    <Label Grid.Row="0" Grid.Column="1" Text="€13.80" FontAttributes="Bold" FontSize="18" TextColor="#29AB87" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="€13.80" FontAttributes="Bold" FontSize="18" TextColor="#FEBE10" />
                 </Grid>
             </Border>
             
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Fill">
                 <Button Text="Clear Cart" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="25" HorizontalOptions="FillAndExpand" />
-                <Button Text="Checkout" BackgroundColor="#29AB87" TextColor="White" CornerRadius="25" HorizontalOptions="FillAndExpand" />
+                <Button Text="Checkout" BackgroundColor="#FEBE10" TextColor="White" CornerRadius="25" HorizontalOptions="FillAndExpand" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Grid>

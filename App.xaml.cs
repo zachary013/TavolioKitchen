@@ -38,7 +38,7 @@ public partial class App : Application
                         {
                             Text = "TavolioKitchen",
                             FontSize = 32,
-                            TextColor = Color.Parse("#29AB87"),
+                            TextColor = Color.Parse("#FEBE10"),
                             HorizontalOptions = LayoutOptions.Center
                         },
                         new Label

@@ -9,14 +9,14 @@
     Shell.FlyoutBehavior="Disabled"
     Title="TavolioKitchen"
     BackgroundColor="White"
-    ForegroundColor="#29AB87">
+    ForegroundColor="#FEBE10">
 
     <TabBar>
         <Tab Title="Menu">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons"
                                  Glyph="{x:Static fonts:MaterialIcons.RestaurantMenu}"
-                                 Color="#29AB87"
+                                 Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
@@ -26,7 +26,7 @@
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons"
                                  Glyph="{x:Static fonts:MaterialIcons.ShoppingCart}"
-                                 Color="#29AB87"
+                                 Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:CartPage}" />
@@ -36,7 +36,7 @@
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons"
                                  Glyph="{x:Static fonts:MaterialIcons.EventAvailable}"
-                                 Color="#29AB87"
+                                 Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" />
@@ -46,7 +46,7 @@
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons"
                                  Glyph="{x:Static fonts:MaterialIcons.AccountCircle}"
-                                 Color="#29AB87"
+                                 Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
