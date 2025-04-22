@@ -5,25 +5,50 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RestoGestApp"
     xmlns:views="clr-namespace:RestoGestApp.Views"
+    xmlns:fonts="clr-namespace:RestoGestApp.Resources.Fonts"
     Shell.FlyoutBehavior="Disabled"
     Title="TavolioKitchen"
     BackgroundColor="White"
-    ForegroundColor="#29AB87">
+    ForegroundColor="#FEBE10">
 
     <TabBar>
-        <Tab Title="Menu" Icon="menu_icon.png">
+        <Tab Title="Menu">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.RestaurantMenu}"
+                                 Color="#FEBE10"
+                                 Size="24" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
-        
-        <Tab Title="Cart" Icon="cart_icon.png">
+
+        <Tab Title="Cart">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.ShoppingCart}"
+                                 Color="#FEBE10"
+                                 Size="24" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:CartPage}" />
         </Tab>
-        
-        <Tab Title="Reservations" Icon="reservation_icon.png">
+
+        <Tab Title="Reservations">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.EventAvailable}"
+                                 Color="#FEBE10"
+                                 Size="24" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" />
         </Tab>
-        
-        <Tab Title="Profile" Icon="profile_icon.png">
+
+        <Tab Title="Profile">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="{x:Static fonts:MaterialIcons.AccountCircle}"
+                                 Color="#FEBE10"
+                                 Size="24" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
         </Tab>
     </TabBar>

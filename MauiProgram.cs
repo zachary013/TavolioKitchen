@@ -16,6 +16,8 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("fa-solid-900.ttf", "FontAwesome");
+                fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcons");
             });
 
         // Register services
@@ -23,14 +25,14 @@ public static class MauiProgram
         builder.Services.AddSingleton<DataService>();
         builder.Services.AddSingleton<NotificationService>();
         builder.Services.AddSingleton<PaymentService>();
-        
+
         // Register view models
         builder.Services.AddSingleton<CartViewModel>();
         builder.Services.AddSingleton<MenuViewModel>();
         builder.Services.AddSingleton<ReservationViewModel>();
         builder.Services.AddSingleton<UserViewModel>();
         builder.Services.AddSingleton<ReportViewModel>();
-        
+
         // Register views
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<CartPage>();

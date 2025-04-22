@@ -8,41 +8,41 @@
         <VerticalStackLayout Spacing="25" Padding="20">
             <!-- Header -->
             <VerticalStackLayout Spacing="5" Margin="0,10,0,20">
-                <Label 
+                <Label
                     Text="TavolioKitchen"
                     FontSize="32"
                     FontAttributes="Bold"
-                    TextColor="#29AB87"
+                    TextColor="#FEBE10"
                     HorizontalOptions="Center" />
-                
-                <Label 
+
+                <Label
                     Text="Delicious Food, Delivered"
                     FontSize="18"
                     TextColor="Gray"
                     HorizontalOptions="Center" />
             </VerticalStackLayout>
-            
+
             <!-- Categories -->
-            <Label 
+            <Label
                 Text="Categories"
                 FontSize="24"
                 FontAttributes="Bold"
                 TextColor="Black" />
-                
+
             <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
                 <HorizontalStackLayout x:Name="CategoriesLayout" Spacing="15" HorizontalOptions="Start">
                     <!-- Categories will be added here dynamically -->
                 </HorizontalStackLayout>
             </ScrollView>
-            
+
             <!-- Menu Items -->
-            <Label 
+            <Label
                 Text="Menu Items"
                 FontSize="24"
                 FontAttributes="Bold"
                 TextColor="Black"
                 Margin="0,10,0,0" />
-                
+
             <VerticalStackLayout x:Name="MenuItemsLayout" Spacing="15">
                 <!-- Menu items will be added here dynamically -->
             </VerticalStackLayout>

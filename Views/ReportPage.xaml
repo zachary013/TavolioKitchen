@@ -11,68 +11,68 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                                HorizontalOptions="Center" />
-            
+
             <!-- Report Filters -->
             <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
                 <Border.Shadow>
                     <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Generate Report" FontAttributes="Bold" FontSize="18" 
-                           TextColor="#29AB87" HorizontalOptions="Center" />
-                    
+                    <Label Text="Generate Report" FontAttributes="Bold" FontSize="18"
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
+
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                         <VerticalStackLayout Grid.Column="0" Spacing="5">
                             <Label Text="Start Date" />
                             <DatePicker Date="{Binding StartDate}" />
                         </VerticalStackLayout>
-                        
+
                         <VerticalStackLayout Grid.Column="1" Spacing="5">
                             <Label Text="End Date" />
                             <DatePicker Date="{Binding EndDate}" />
                         </VerticalStackLayout>
                     </Grid>
-                    
-                    <Button Text="Generate Report" BackgroundColor="#29AB87" TextColor="White" 
+
+                    <Button Text="Generate Report" BackgroundColor="#FEBE10" TextColor="White"
                             CornerRadius="25" Command="{Binding GenerateReportCommand}" />
                 </VerticalStackLayout>
             </Border>
-            
+
             <!-- Report Summary -->
-            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White" 
+            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White"
                     IsVisible="{Binding CurrentReport, Converter={StaticResource IsNotNullConverter}}">
                 <Border.Shadow>
                     <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Report Summary" FontAttributes="Bold" FontSize="18" 
-                           TextColor="#29AB87" HorizontalOptions="Center" />
-                    
+                    <Label Text="Report Summary" FontAttributes="Bold" FontSize="18"
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
+
                     <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto" RowSpacing="10" ColumnSpacing="15">
                         <Label Grid.Row="0" Grid.Column="0" Text="Total Revenue:" FontAttributes="Bold" />
                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding CurrentReport.TotalRevenue, StringFormat='€{0:F2}'}" />
-                        
+
                         <Label Grid.Row="1" Grid.Column="0" Text="Total Orders:" FontAttributes="Bold" />
                         <Label Grid.Row="1" Grid.Column="1" Text="{Binding CurrentReport.TotalOrders}" />
-                        
+
                         <Label Grid.Row="2" Grid.Column="0" Text="Total Reservations:" FontAttributes="Bold" />
                         <Label Grid.Row="2" Grid.Column="1" Text="{Binding CurrentReport.TotalReservations}" />
                     </Grid>
                 </VerticalStackLayout>
             </Border>
-            
+
             <!-- Revenue by Category -->
-            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White" 
+            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White"
                     IsVisible="{Binding RevenueByCategoryItems.Count, Converter={StaticResource IsGreaterThanZeroConverter}}">
                 <Border.Shadow>
                     <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Revenue by Category" FontAttributes="Bold" FontSize="18" 
-                           TextColor="#29AB87" HorizontalOptions="Center" />
-                    
+                    <Label Text="Revenue by Category" FontAttributes="Bold" FontSize="18"
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
+
                     <CollectionView ItemsSource="{Binding RevenueByCategoryItems}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -85,17 +85,17 @@
                     </CollectionView>
                 </VerticalStackLayout>
             </Border>
-            
+
             <!-- Orders by Status -->
-            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White" 
+            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White"
                     IsVisible="{Binding OrdersByStatusItems.Count, Converter={StaticResource IsGreaterThanZeroConverter}}">
                 <Border.Shadow>
                     <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Orders by Status" FontAttributes="Bold" FontSize="18" 
-                           TextColor="#29AB87" HorizontalOptions="Center" />
-                    
+                    <Label Text="Orders by Status" FontAttributes="Bold" FontSize="18"
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
+
                     <CollectionView ItemsSource="{Binding OrdersByStatusItems}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -108,17 +108,17 @@
                     </CollectionView>
                 </VerticalStackLayout>
             </Border>
-            
+
             <!-- Top Selling Items -->
-            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White" 
+            <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White"
                     IsVisible="{Binding TopSellingItems.Count, Converter={StaticResource IsGreaterThanZeroConverter}}">
                 <Border.Shadow>
                     <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Top Selling Items" FontAttributes="Bold" FontSize="18" 
-                           TextColor="#29AB87" HorizontalOptions="Center" />
-                    
+                    <Label Text="Top Selling Items" FontAttributes="Bold" FontSize="18"
+                           TextColor="#FEBE10" HorizontalOptions="Center" />
+
                     <CollectionView ItemsSource="{Binding TopSellingItems}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:MenuItemModel">

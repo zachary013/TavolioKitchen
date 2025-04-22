@@ -73,14 +73,14 @@ public partial class MainPage : ContentPage
         {
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(20) },
             Padding = new Thickness(15, 8),
-            BackgroundColor = _selectedCategory == "All" ? Color.Parse("#29AB87") : Colors.Transparent,
-            Stroke = new SolidColorBrush(Color.Parse("#29AB87"))
+            BackgroundColor = _selectedCategory == "All" ? Color.Parse("#FEBE10") : Colors.Transparent,
+            Stroke = new SolidColorBrush(Color.Parse("#FEBE10"))
         };
         
         var allCategoryLabel = new Label
         {
             Text = "All",
-            TextColor = _selectedCategory == "All" ? Colors.White : Color.Parse("#29AB87"),
+            TextColor = _selectedCategory == "All" ? Colors.White : Color.Parse("#FEBE10"),
             FontAttributes = FontAttributes.Bold
         };
         
@@ -104,14 +104,14 @@ public partial class MainPage : ContentPage
             {
                 StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(20) },
                 Padding = new Thickness(15, 8),
-                BackgroundColor = _selectedCategory == category ? Color.Parse("#29AB87") : Colors.Transparent,
-                Stroke = new SolidColorBrush(Color.Parse("#29AB87"))
+                BackgroundColor = _selectedCategory == category ? Color.Parse("#FEBE10") : Colors.Transparent,
+                Stroke = new SolidColorBrush(Color.Parse("#FEBE10"))
             };
             
             var categoryLabel = new Label
             {
                 Text = category,
-                TextColor = _selectedCategory == category ? Colors.White : Color.Parse("#29AB87"),
+                TextColor = _selectedCategory == category ? Colors.White : Color.Parse("#FEBE10"),
                 FontAttributes = FontAttributes.Bold
             };
             
@@ -210,7 +210,7 @@ public partial class MainPage : ContentPage
             var priceLabel = new Label
             {
                 Text = $"€{item.Price:F2}",
-                TextColor = Color.Parse("#29AB87"),
+                TextColor = Color.Parse("#FEBE10"),
                 FontAttributes = FontAttributes.Bold,
                 FontSize = 16,
                 VerticalOptions = LayoutOptions.Center
@@ -219,7 +219,7 @@ public partial class MainPage : ContentPage
             var addToCartButton = new Button
             {
                 Text = "Add to Cart",
-                BackgroundColor = Color.Parse("#29AB87"),
+                BackgroundColor = Color.Parse("#FEBE10"),
                 TextColor = Colors.White,
                 CornerRadius = 20,
                 HeightRequest = 35,

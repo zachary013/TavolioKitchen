@@ -69,17 +69,9 @@ public class DatabaseService
                     new Models.MenuItemModel { Name = "Vegetarian Pizza", Description = "Tomato sauce, mozzarella and mixed vegetables", Price = 10.50m, Category = "Pizza", ImagePath = "pizza.png", IsAvailable = true },
                     
                     // Other items with default image
-                    new Models.MenuItemModel { Name = "Spaghetti Bolognese", Description = "Spaghetti with beef ragù", Price = 9.50m, Category = "Pasta", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    new Models.MenuItemModel { Name = "Lasagna", Description = "Layers of pasta with beef ragù and béchamel sauce", Price = 11.90m, Category = "Pasta", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    new Models.MenuItemModel { Name = "Carbonara", Description = "Spaghetti with eggs, pecorino cheese, guanciale and black pepper", Price = 10.90m, Category = "Pasta", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    
-                    new Models.MenuItemModel { Name = "Greek Salad", Description = "Tomatoes, cucumbers, olives, feta cheese and olive oil", Price = 4.90m, Category = "Salads", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    new Models.MenuItemModel { Name = "Caesar Salad", Description = "Romaine lettuce with Caesar dressing, croutons and parmesan", Price = 5.50m, Category = "Salads", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    new Models.MenuItemModel { Name = "Caprese Salad", Description = "Tomatoes, mozzarella, basil and olive oil", Price = 6.50m, Category = "Salads", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    
-                    new Models.MenuItemModel { Name = "Tiramisu", Description = "Coffee-flavoured Italian dessert", Price = 5.90m, Category = "Desserts", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    new Models.MenuItemModel { Name = "Cheesecake", Description = "New York style cheesecake", Price = 5.50m, Category = "Desserts", ImagePath = "dotnet_bot.png", IsAvailable = true },
-                    new Models.MenuItemModel { Name = "Ice Cream", Description = "Vanilla, chocolate and strawberry ice cream", Price = 4.50m, Category = "Desserts", ImagePath = "dotnet_bot.png", IsAvailable = true }
+                    new Models.MenuItemModel { Name = "Spaghetti Bolognese", Description = "Spaghetti with beef ragù", Price = 9.50m, Category = "Pasta", ImagePath = "pasta.png", IsAvailable = true },
+                    new Models.MenuItemModel { Name = "Lasagna", Description = "Layers of pasta with beef ragù and béchamel sauce", Price = 11.90m, Category = "Pasta", ImagePath = "pasta.png", IsAvailable = true },
+                    new Models.MenuItemModel { Name = "Carbonara", Description = "Spaghetti with eggs, pecorino cheese, guanciale and black pepper", Price = 10.90m, Category = "Pasta", ImagePath = "pasta.png", IsAvailable = true },
                 };
                 
                 foreach (var item in menuItems)
