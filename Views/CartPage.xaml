@@ -51,7 +51,7 @@
                         <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                     </Border.Shadow>
                     <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="15">
-                        <Image Grid.RowSpan="2" Grid.Column="0" Source="dotnet_bot.png" WidthRequest="60" HeightRequest="60" />
+                        <Image Grid.RowSpan="2" Grid.Column="0" Source="pizza.png" WidthRequest="60" HeightRequest="60" />
                         
                         <Label Grid.Row="0" Grid.Column="1" Text="Greek Salad" FontAttributes="Bold" FontSize="16" />
                         <Label Grid.Row="1" Grid.Column="1" Text="€4.90" TextColor="#FEBE10" FontAttributes="Bold" />
