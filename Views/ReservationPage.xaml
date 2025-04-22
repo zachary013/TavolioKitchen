@@ -48,7 +48,7 @@
 
                     <Editor Placeholder="Special Requests (optional)" HeightRequest="100" />
 
-                    <Button Text="Make Reservation" BackgroundColor="#FEBE10" TextColor="White" CornerRadius="25" />
+                    <Button Text="Make Reservation" Style="{StaticResource BrandButtonStyle}" />
                 </VerticalStackLayout>
             </Border>
 
@@ -73,7 +73,7 @@
                         <Label Text="Guests: 2" />
                     </VerticalStackLayout>
 
-                    <Button Grid.Row="2" Text="Cancel Reservation" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
+                    <Button Grid.Row="2" Text="Cancel Reservation" Style="{StaticResource OutlinedButtonStyle}" />
                 </Grid>
             </Border>
 
@@ -95,7 +95,7 @@
                         <Label Text="Guests: 4" />
                     </VerticalStackLayout>
 
-                    <Button Grid.Row="2" Text="Cancel Reservation" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
+                    <Button Grid.Row="2" Text="Cancel Reservation" Style="{StaticResource DestructiveButtonStyle}" />
                 </Grid>
             </Border>
         </VerticalStackLayout>

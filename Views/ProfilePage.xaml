@@ -40,7 +40,7 @@
                     <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
-                    <Image Source="dotnet_bot.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" />
+                    <Image Source="profile_pic1.jpg" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" />
 
                     <Label Text="John Doe" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center" />
                     <Label Text="Client" TextColor="Gray" HorizontalOptions="Center" />

@@ -8,9 +8,9 @@
              Title="{Binding Title}">
 
     <Grid RowDefinitions="Auto,*" Padding="10">
-        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                            HorizontalOptions="Center" VerticalOptions="Center" />
-        
+
         <!-- Categories Tabs -->
         <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
             <HorizontalStackLayout Spacing="10" Padding="0,0,0,10">
@@ -32,7 +32,7 @@
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MenuViewModel}}, Path=LoadMenuItemsCommand}"
                                                       CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
-                            <Label Text="{Binding .}" 
+                            <Label Text="{Binding .}"
                                    TextColor="{AppThemeBinding Light=#FEBE10, Dark=#FEBE10}"
                                    FontAttributes="Bold" />
                         </Border>
@@ -40,7 +40,7 @@
                 </BindableLayout.ItemTemplate>
             </HorizontalStackLayout>
         </ScrollView>
-        
+
         <!-- Menu Items Grid -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding MenuItems}" SelectionMode="None">
             <CollectionView.ItemsLayout>
@@ -58,16 +58,15 @@
                             <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                         </Border.Shadow>
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
-                            <Image Grid.Row="0" Source="{Binding ImagePath}" Aspect="AspectFill" 
+                            <Image Grid.Row="0" Source="{Binding ImagePath}" Aspect="AspectFill"
                                    HeightRequest="120" WidthRequest="120" HorizontalOptions="Center" />
-                            <Label Grid.Row="1" Text="{Binding Name}" FontAttributes="Bold" FontSize="16" 
+                            <Label Grid.Row="1" Text="{Binding Name}" FontAttributes="Bold" FontSize="16"
                                    HorizontalOptions="Center" />
-                            <Label Grid.Row="2" Text="{Binding Description}" FontSize="12" TextColor="Gray" 
+                            <Label Grid.Row="2" Text="{Binding Description}" FontSize="12" TextColor="Gray"
                                    MaxLines="2" LineBreakMode="TailTruncation" />
-                            <Label Grid.Row="3" Text="{Binding Price, StringFormat='€{0:F2}'}" FontAttributes="Bold" 
-                                   TextColor="#FEBE10" HorizontalOptions="Center" />
-                            <Button Grid.Row="4" Text="Add to Cart" BackgroundColor="#FEBE10" TextColor="White" 
-                                    CornerRadius="20" HeightRequest="35" FontSize="12"
+                            <Label Grid.Row="3" Text="{Binding Price, StringFormat='${0:F2}'}" FontAttributes="Bold"
+                                   TextColor="Black" HorizontalOptions="Center" />
+                            <Button Grid.Row="4" Text="Add to Cart" Style="{StaticResource AddToCartButtonStyle}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MenuViewModel}}, Path=AddToCartCommand}"
                                     CommandParameter="{Binding .}" />
                         </Grid>
