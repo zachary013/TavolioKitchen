@@ -3,19 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RestoGestApp.Views.ReservationPage"
              Title="Reservations">
-    
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
             <!-- Header -->
             <VerticalStackLayout Spacing="5" Margin="0,10,0,20">
-                <Label 
+                <Label
                     Text="Make a Reservation"
                     FontSize="28"
                     FontAttributes="Bold"
                     TextColor="#29AB87"
                     HorizontalOptions="Center" />
             </VerticalStackLayout>
-            
+
             <!-- Reservation Form -->
             <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White">
                 <Border.Shadow>
@@ -23,38 +23,38 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Entry Placeholder="Your Name" />
-                    
+
                     <Entry Placeholder="Phone Number" Keyboard="Telephone" />
-                    
+
                     <Label Text="Date" />
                     <DatePicker />
-                    
+
                     <Label Text="Time" />
                     <TimePicker />
-                    
+
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                         <VerticalStackLayout Grid.Column="0" Spacing="5">
                             <Label Text="Table Number" />
                             <Stepper Minimum="1" Maximum="20" Value="1" />
                             <Label Text="Table 1" />
                         </VerticalStackLayout>
-                        
+
                         <VerticalStackLayout Grid.Column="1" Spacing="5">
                             <Label Text="Number of Guests" />
                             <Stepper Minimum="1" Maximum="12" Value="2" />
                             <Label Text="2 guests" />
                         </VerticalStackLayout>
                     </Grid>
-                    
+
                     <Editor Placeholder="Special Requests (optional)" HeightRequest="100" />
-                    
+
                     <Button Text="Make Reservation" BackgroundColor="#29AB87" TextColor="White" CornerRadius="25" />
                 </VerticalStackLayout>
             </Border>
-            
+
             <!-- My Reservations -->
             <Label Text="My Reservations" FontAttributes="Bold" FontSize="22" Margin="0,10,0,0" />
-            
+
             <!-- Reservation Item -->
             <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
                 <Border.Shadow>
@@ -65,18 +65,18 @@
                         <Label Grid.Column="0" Text="Reservation #1234" FontAttributes="Bold" FontSize="18" />
                         <Label Grid.Column="1" Text="Confirmed" TextColor="#29AB87" FontAttributes="Bold" />
                     </Grid>
-                    
+
                     <VerticalStackLayout Grid.Row="1" Spacing="5">
                         <Label Text="Date: April 20, 2025" />
                         <Label Text="Time: 7:30 PM" />
                         <Label Text="Table: 4" />
                         <Label Text="Guests: 2" />
                     </VerticalStackLayout>
-                    
+
                     <Button Grid.Row="2" Text="Cancel Reservation" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
                 </Grid>
             </Border>
-            
+
             <!-- Another Reservation Item -->
             <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
                 <Border.Shadow>
@@ -87,14 +87,14 @@
                         <Label Grid.Column="0" Text="Reservation #1235" FontAttributes="Bold" FontSize="18" />
                         <Label Grid.Column="1" Text="Pending" TextColor="Orange" FontAttributes="Bold" />
                     </Grid>
-                    
+
                     <VerticalStackLayout Grid.Row="1" Spacing="5">
                         <Label Text="Date: April 25, 2025" />
                         <Label Text="Time: 8:00 PM" />
                         <Label Text="Table: 6" />
                         <Label Text="Guests: 4" />
                     </VerticalStackLayout>
-                    
+
                     <Button Grid.Row="2" Text="Cancel Reservation" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
                 </Grid>
             </Border>

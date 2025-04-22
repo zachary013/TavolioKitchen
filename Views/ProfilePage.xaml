@@ -3,19 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RestoGestApp.Views.ProfilePage"
              Title="Profile">
-    
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
             <!-- Header -->
             <VerticalStackLayout Spacing="5" Margin="0,10,0,20">
-                <Label 
+                <Label
                     Text="My Profile"
                     FontSize="28"
                     FontAttributes="Bold"
                     TextColor="#29AB87"
                     HorizontalOptions="Center" />
             </VerticalStackLayout>
-            
+
             <!-- Login Form (shown when not logged in) -->
             <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" IsVisible="false">
                 <Border.Shadow>
@@ -23,17 +23,17 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Login" FontAttributes="Bold" FontSize="20" TextColor="#29AB87" HorizontalOptions="Center" />
-                    
+
                     <Entry Placeholder="Username" />
-                    
+
                     <Entry Placeholder="Password" IsPassword="True" />
-                    
+
                     <Button Text="Login" BackgroundColor="#29AB87" TextColor="White" CornerRadius="25" />
-                    
+
                     <Label Text="Don't have an account? Sign up" HorizontalOptions="Center" TextColor="#29AB87" />
                 </VerticalStackLayout>
             </Border>
-            
+
             <!-- User Profile (shown when logged in) -->
             <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White">
                 <Border.Shadow>
@@ -41,31 +41,31 @@
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="15">
                     <Image Source="dotnet_bot.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" />
-                    
+
                     <Label Text="John Doe" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center" />
                     <Label Text="Client" TextColor="Gray" HorizontalOptions="Center" />
-                    
+
                     <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="15" ColumnSpacing="15">
                         <Label Grid.Row="0" Grid.Column="0" Text="Username:" FontAttributes="Bold" />
                         <Label Grid.Row="0" Grid.Column="1" Text="johndoe" />
-                        
+
                         <Label Grid.Row="1" Grid.Column="0" Text="Email:" FontAttributes="Bold" />
                         <Label Grid.Row="1" Grid.Column="1" Text="john.doe@example.com" />
-                        
+
                         <Label Grid.Row="2" Grid.Column="0" Text="Phone:" FontAttributes="Bold" />
                         <Label Grid.Row="2" Grid.Column="1" Text="+1 234 567 890" />
-                        
+
                         <Label Grid.Row="3" Grid.Column="0" Text="Member since:" FontAttributes="Bold" />
                         <Label Grid.Row="3" Grid.Column="1" Text="April 2025" />
                     </Grid>
-                    
+
                     <Button Text="Edit Profile" BackgroundColor="#29AB87" TextColor="White" CornerRadius="25" Margin="0,10,0,0" />
                 </VerticalStackLayout>
             </Border>
-            
+
             <!-- Order History -->
             <Label Text="Order History" FontAttributes="Bold" FontSize="22" Margin="0,10,0,0" />
-            
+
             <!-- Order Item -->
             <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
                 <Border.Shadow>
@@ -76,17 +76,17 @@
                         <Label Grid.Column="0" Text="Order #5678" FontAttributes="Bold" FontSize="18" />
                         <Label Grid.Column="1" Text="Delivered" TextColor="#29AB87" FontAttributes="Bold" />
                     </Grid>
-                    
+
                     <VerticalStackLayout Grid.Row="1" Spacing="5">
                         <Label Text="Date: April 15, 2025" />
                         <Label Text="Items: 3" />
                         <Label Text="Total: €24.30" TextColor="#29AB87" FontAttributes="Bold" />
                     </VerticalStackLayout>
-                    
+
                     <Button Grid.Row="2" Text="View Details" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
                 </Grid>
             </Border>
-            
+
             <!-- Another Order Item -->
             <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
                 <Border.Shadow>
@@ -97,17 +97,17 @@
                         <Label Grid.Column="0" Text="Order #5679" FontAttributes="Bold" FontSize="18" />
                         <Label Grid.Column="1" Text="Processing" TextColor="Orange" FontAttributes="Bold" />
                     </Grid>
-                    
+
                     <VerticalStackLayout Grid.Row="1" Spacing="5">
                         <Label Text="Date: April 17, 2025" />
                         <Label Text="Items: 2" />
                         <Label Text="Total: €18.40" TextColor="#29AB87" FontAttributes="Bold" />
                     </VerticalStackLayout>
-                    
+
                     <Button Grid.Row="2" Text="View Details" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
                 </Grid>
             </Border>
-            
+
             <!-- Logout Button -->
             <Button Text="Logout" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="25" Margin="0,10,0,20" />
         </VerticalStackLayout>
