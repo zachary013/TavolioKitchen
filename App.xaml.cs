@@ -65,13 +65,6 @@ public partial class App : Application
         }
     }
     
-    // Override CreateWindow instead of setting MainPage directly
-    protected override Window CreateWindow(IActivationState? activationState)
-    {
-        // Use the base implementation which will use the MainPage we set
-        return base.CreateWindow(activationState);
-    }
-    
     private async Task InitializeDatabaseAsync()
     {
         try

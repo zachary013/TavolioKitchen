@@ -1,5 +1,6 @@
 using RestoGestApp.Services;
 using RestoGestApp.Models;
+using RestoGestApp.ViewModels;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace RestoGestApp;
@@ -8,15 +9,17 @@ public partial class MainPage : ContentPage
 {
     private readonly DatabaseService _databaseService;
     private readonly AuthGuardService _authGuard;
+    private readonly CartViewModel _cartViewModel;
     private List<string> _categories = new List<string>();
     private List<MenuItemModel> _menuItems = new List<MenuItemModel>();
     private string _selectedCategory = "All";
 
-    public MainPage(DatabaseService databaseService, AuthGuardService authGuard)
+    public MainPage(DatabaseService databaseService, AuthGuardService authGuard, CartViewModel cartViewModel)
     {
         InitializeComponent();
         _databaseService = databaseService;
         _authGuard = authGuard;
+        _cartViewModel = cartViewModel;
 
         // Load data when the page appears
         this.Appearing += OnPageAppearing;
@@ -205,10 +208,16 @@ public partial class MainPage : ContentPage
                     Padding = new Thickness(5, 0)
                 };
                 
+                // Store the menu item as a binding context for the button
+                addButton.BindingContext = menuItem;
+                
                 addButton.Clicked += async (sender, e) => 
                 {
-                    await DisplayAlert("Add to Cart", $"{menuItem.Name} added to cart", "OK");
-                    // Here you would add the item to the cart
+                    if (sender is Button button && button.BindingContext is MenuItemModel item)
+                    {
+                        await _cartViewModel.AddItemAsync(item);
+                        await DisplayAlert("Added to Cart", $"{item.Name} added to cart", "OK");
+                    }
                 };
                 
                 priceLayout.Add(priceLabel);

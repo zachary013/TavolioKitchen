@@ -21,6 +21,9 @@ public partial class UserViewModel : BaseViewModel
     private string _password = string.Empty;
     
     [ObservableProperty]
+    private string _confirmPassword = string.Empty;
+    
+    [ObservableProperty]
     private bool _isLoggedIn;
     
     public UserViewModel(DataService dataService, NotificationService notificationService) 
@@ -45,6 +48,7 @@ public partial class UserViewModel : BaseViewModel
             Phone = string.Empty,
             Role = UserRole.Client // Default role for new users
         };
+        ConfirmPassword = string.Empty;
     }
     
     private void LoadUserSession()
@@ -65,12 +69,6 @@ public partial class UserViewModel : BaseViewModel
                         {
                             CurrentUser = user;
                             IsLoggedIn = true;
-                            
-                            // Notify the shell about authentication state
-                            if (Application.Current?.MainPage is AppShell shell)
-                            {
-                                _ = shell.HandleAuthenticationChanged(true);
-                            }
                         });
                     }
                 });
@@ -134,11 +132,8 @@ public partial class UserViewModel : BaseViewModel
                 
                 await NotificationService.ShowToastAsync($"Welcome, {user.FullName}!");
                 
-                // Notify the shell about authentication state
-                if (Application.Current?.MainPage is AppShell shell)
-                {
-                    await shell.HandleAuthenticationChanged(true);
-                }
+                // Navigate to main app
+                await Shell.Current.GoToAsync("//main");
             }
             else
             {
@@ -168,11 +163,8 @@ public partial class UserViewModel : BaseViewModel
         
         await NotificationService.ShowToastAsync("You have been logged out.");
         
-        // Notify the shell about authentication state
-        if (Application.Current?.MainPage is AppShell shell)
-        {
-            await shell.HandleAuthenticationChanged(false);
-        }
+        // Navigate to login
+        await Shell.Current.GoToAsync("//login");
     }
     
     [RelayCommand]
@@ -206,12 +198,19 @@ public partial class UserViewModel : BaseViewModel
             return;
         
         // Validate input
-        if (string.IsNullOrWhiteSpace(NewUser.Username) || 
-            string.IsNullOrWhiteSpace(NewUser.Password) || 
-            string.IsNullOrWhiteSpace(NewUser.FullName) || 
-            string.IsNullOrWhiteSpace(NewUser.Email))
+        if (string.IsNullOrWhiteSpace(NewUser.FullName) || 
+            string.IsNullOrWhiteSpace(NewUser.Email) ||
+            string.IsNullOrWhiteSpace(NewUser.Phone) ||
+            string.IsNullOrWhiteSpace(NewUser.Password))
         {
             await NotificationService.ShowAlertAsync("Error", "Please fill in all required fields.");
+            return;
+        }
+        
+        // Validate password confirmation
+        if (NewUser.Password != ConfirmPassword)
+        {
+            await NotificationService.ShowAlertAsync("Error", "Passwords do not match.");
             return;
         }
         
@@ -219,13 +218,8 @@ public partial class UserViewModel : BaseViewModel
         {
             IsBusy = true;
             
-            // Check if username already exists
-            bool isUsernameAvailable = await DataService.IsUsernameAvailableAsync(NewUser.Username);
-            if (!isUsernameAvailable)
-            {
-                await NotificationService.ShowAlertAsync("Error", "Username already exists. Please choose a different username.");
-                return;
-            }
+            // Generate a username from email (before @ symbol)
+            NewUser.Username = NewUser.Email.Split('@')[0];
             
             // Check if email already exists
             bool isEmailAvailable = await DataService.IsEmailAvailableAsync(NewUser.Email);
@@ -233,6 +227,15 @@ public partial class UserViewModel : BaseViewModel
             {
                 await NotificationService.ShowAlertAsync("Error", "Email already exists. Please use a different email address.");
                 return;
+            }
+            
+            // Check if username already exists and generate a unique one if needed
+            bool isUsernameAvailable = await DataService.IsUsernameAvailableAsync(NewUser.Username);
+            if (!isUsernameAvailable)
+            {
+                // Add a random number to make it unique
+                Random random = new Random();
+                NewUser.Username = $"{NewUser.Username}{random.Next(1000, 9999)}";
             }
             
             // Set default role for new users
@@ -254,11 +257,8 @@ public partial class UserViewModel : BaseViewModel
             
             await NotificationService.ShowAlertAsync("Success", "Your account has been created successfully!");
             
-            // Notify the shell about authentication state
-            if (Application.Current?.MainPage is AppShell shell)
-            {
-                await shell.HandleAuthenticationChanged(true);
-            }
+            // Navigate to main app
+            await Shell.Current.GoToAsync("//main");
         }
         catch (Exception ex)
         {
@@ -273,12 +273,35 @@ public partial class UserViewModel : BaseViewModel
     [RelayCommand]
     private async Task NavigateToLoginAsync()
     {
-        await Shell.Current.GoToAsync("//login");
+        try
+        {
+            // Reset fields
+            InitializeNewUser();
+            
+            // Navigate to login page
+            await Shell.Current.GoToAsync("//login");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Navigation error: {ex.Message}");
+        }
     }
     
     [RelayCommand]
     private async Task NavigateToSignupAsync()
     {
-        await Shell.Current.GoToAsync("//signup");
+        try
+        {
+            // Reset fields
+            Username = string.Empty;
+            Password = string.Empty;
+            
+            // Navigate to signup page
+            await Shell.Current.GoToAsync("//signup");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Navigation error: {ex.Message}");
+        }
     }
 }

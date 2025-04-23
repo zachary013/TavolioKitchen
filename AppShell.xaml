@@ -11,7 +11,8 @@
     BackgroundColor="White"
     ForegroundColor="#FEBE10">
 
-    <TabBar Route="main">
+    <!-- Main App Tab Bar -->
+    <TabBar x:Name="MainTabBar" Route="main">
         <Tab Title="Menu">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons"
@@ -19,7 +20,7 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="menu" />
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
 
         <Tab Title="Cart">
@@ -29,7 +30,7 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:CartPage}" Route="cart" />
+            <ShellContent ContentTemplate="{DataTemplate views:CartPage}" />
         </Tab>
 
         <Tab Title="Reservations">
@@ -39,7 +40,7 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" Route="reservations" />
+            <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" />
         </Tab>
 
         <Tab Title="Profile">
@@ -49,11 +50,11 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="profile" />
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
         </Tab>
     </TabBar>
     
-    <!-- Login and Signup Pages -->
-    <ShellContent Route="login" ContentTemplate="{DataTemplate views:LoginPage}" />
-    <ShellContent Route="signup" ContentTemplate="{DataTemplate views:SignupPage}" />
+    <!-- Authentication Pages -->
+    <ShellContent x:Name="LoginContent" Route="login" ContentTemplate="{DataTemplate views:LoginPage}" />
+    <ShellContent x:Name="SignupContent" Route="signup" ContentTemplate="{DataTemplate views:SignupPage}" />
 </Shell>

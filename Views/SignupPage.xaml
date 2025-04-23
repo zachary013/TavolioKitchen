@@ -50,13 +50,13 @@
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="Username" FontAttributes="Bold" TextColor="Gray" />
-                        <Entry Text="{Binding NewUser.Username}" Placeholder="Choose a username" />
+                        <Label Text="Password" FontAttributes="Bold" TextColor="Gray" />
+                        <Entry Text="{Binding NewUser.Password}" Placeholder="Choose a password" IsPassword="True" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="5">
-                        <Label Text="Password" FontAttributes="Bold" TextColor="Gray" />
-                        <Entry Text="{Binding NewUser.Password}" Placeholder="Choose a password" IsPassword="True" />
+                        <Label Text="Confirm Password" FontAttributes="Bold" TextColor="Gray" />
+                        <Entry Text="{Binding ConfirmPassword}" Placeholder="Confirm your password" IsPassword="True" />
                     </VerticalStackLayout>
 
                     <Button Text="Create Account" 

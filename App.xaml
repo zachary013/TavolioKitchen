@@ -17,6 +17,8 @@
             <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
             <converters:IsGreaterThanZeroConverter x:Key="IsGreaterThanZeroConverter" />
             <converters:EnumEqualConverter x:Key="EnumEqualConverter" />
+            <converters:IsZeroConverter x:Key="IsZeroConverter" />
+            <converters:IsNotZeroConverter x:Key="IsNotZeroConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
