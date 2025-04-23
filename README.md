@@ -101,4 +101,15 @@ RestoGestApp/
    ```
    dotnet build -t:Run -f net9.0-maccatalyst
    ```
+---
 
+## Prepared by :
+
+| Avatar                                                                                                  | Name | GitHub |
+|---------------------------------------------------------------------------------------------------------|------|--------|
+| <img src="https://github.com/zachary013.png" width="50" height="50" style="border-radius: 50%"/>        | Zakariae Azarkan | [@zachary013](https://github.com/zachary013) |
+
+---
+
+## 🤝 Contributing
+This is my uni work, so I’m not looking for pull requests—but feel free to fork it and tweak it for your own deep learning adventures! Got feedback? Hit me up via GitHub Issues.
