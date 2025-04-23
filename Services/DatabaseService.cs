@@ -94,7 +94,9 @@ public class DatabaseService
                         FullName = "Admin User", 
                         Role = Models.UserRole.Admin, 
                         Email = "admin@tavoliokitchen.com", 
-                        Phone = "123-456-7890" 
+                        Phone = "123-456-7890",
+                        Bio = "Restaurant administrator with over 10 years of experience in the food industry.",
+                        ProfileImagePath = "profile_admin.png"
                     },
                     new Models.User { 
                         Username = "manager", 
@@ -102,7 +104,9 @@ public class DatabaseService
                         FullName = "Manager User", 
                         Role = Models.UserRole.Manager, 
                         Email = "manager@tavoliokitchen.com", 
-                        Phone = "123-456-7891" 
+                        Phone = "123-456-7891",
+                        Bio = "Restaurant manager passionate about creating exceptional dining experiences.",
+                        ProfileImagePath = "profile_manager.png"
                     },
                     new Models.User { 
                         Username = "staff", 
@@ -110,7 +114,9 @@ public class DatabaseService
                         FullName = "Staff User", 
                         Role = Models.UserRole.Staff, 
                         Email = "staff@tavoliokitchen.com", 
-                        Phone = "123-456-7892" 
+                        Phone = "123-456-7892",
+                        Bio = "Dedicated staff member committed to providing excellent customer service.",
+                        ProfileImagePath = "profile_staff.png"
                     },
                     new Models.User { 
                         Username = "client", 
@@ -118,7 +124,9 @@ public class DatabaseService
                         FullName = "John Doe", 
                         Role = Models.UserRole.Client, 
                         Email = "john.doe@example.com", 
-                        Phone = "123-456-7893" 
+                        Phone = "123-456-7893",
+                        Bio = "Food enthusiast who loves trying new cuisines and dining experiences.",
+                        ProfileImagePath = "profile_client.png"
                     }
                 };
                 

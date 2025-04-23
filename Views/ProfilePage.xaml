@@ -4,22 +4,14 @@
              xmlns:viewmodels="clr-namespace:RestoGestApp.ViewModels"
              x:Class="RestoGestApp.Views.ProfilePage"
              x:DataType="viewmodels:UserViewModel"
-             Title="Profile">
+             Title="Profile"
+             BackgroundColor="#f8f8f8">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
-            <!-- Header -->
-            <VerticalStackLayout Spacing="5" Margin="0,10,0,20">
-                <Label
-                    Text="My Profile"
-                    FontSize="28"
-                    FontAttributes="Bold"
-                    TextColor="#FEBE10"
-                    HorizontalOptions="Center" />
-            </VerticalStackLayout>
-
+        <VerticalStackLayout Spacing="0">
             <!-- Login Form (shown when not logged in) -->
-            <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" IsVisible="{Binding IsLoggedIn, Converter={StaticResource InvertedBoolConverter}}">
+            <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" 
+                    Margin="20" IsVisible="{Binding IsLoggedIn, Converter={StaticResource InvertedBoolConverter}}">
                 <Border.Shadow>
                     <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                 </Border.Shadow>
@@ -49,59 +41,113 @@
             </Border>
 
             <!-- User Profile (shown when logged in) -->
-            <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" IsVisible="{Binding IsLoggedIn}">
-                <Border.Shadow>
-                    <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
-                </Border.Shadow>
-                <VerticalStackLayout Spacing="15">
-                    <Image Source="profile_pic1.jpg" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" />
-
-                    <Label Text="{Binding CurrentUser.FullName}" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center" />
-                    <Label Text="{Binding CurrentUser.Role}" TextColor="Gray" HorizontalOptions="Center" />
-
-                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="15" ColumnSpacing="15">
-                        <Label Grid.Row="0" Grid.Column="0" Text="Username:" FontAttributes="Bold" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding CurrentUser.Username}" />
-
-                        <Label Grid.Row="1" Grid.Column="0" Text="Email:" FontAttributes="Bold" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding CurrentUser.Email}" />
-
-                        <Label Grid.Row="2" Grid.Column="0" Text="Phone:" FontAttributes="Bold" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding CurrentUser.Phone}" />
-                    </Grid>
-
-                    <Button Text="Edit Profile" 
-                            Command="{Binding UpdateProfileCommand}" 
-                            BackgroundColor="#FEBE10" 
-                            TextColor="White" 
-                            CornerRadius="25" 
-                            Margin="0,10,0,0" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Order History (shown when logged in) -->
-            <VerticalStackLayout IsVisible="{Binding IsLoggedIn}" Spacing="15">
-                <Label Text="Order History" FontAttributes="Bold" FontSize="22" Margin="0,10,0,0" />
-
-                <!-- Order Item -->
-                <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
+            <VerticalStackLayout IsVisible="{Binding IsLoggedIn}" Spacing="0">
+                <!-- Black Banner with Profile Image -->
+                <Grid RowDefinitions="150, Auto">
+                    <!-- Black Banner -->
+                    <Rectangle Grid.Row="0" Fill="Black" />
+                    
+                    <!-- Profile Image (positioned to overlap the banner and content) -->
+                    <Border Grid.Row="0" Grid.RowSpan="2"
+                           HeightRequest="120" WidthRequest="120"
+                           StrokeShape="RoundRectangle 60"
+                           Stroke="White"
+                           StrokeThickness="4"
+                           Padding="0"
+                           VerticalOptions="End" HorizontalOptions="Center"
+                           Margin="0,0,0,-60">
+                        <Image Source="{Binding CurrentUser.ProfileImagePath}" 
+                               Aspect="AspectFill" />
+                    </Border>
+                    
+                    <!-- User Name and Role (positioned below the profile image) -->
+                    <VerticalStackLayout Grid.Row="1" Spacing="5" Padding="20,70,20,10">
+                        <Label Text="{Binding CurrentUser.FullName}" 
+                               FontAttributes="Bold" FontSize="24" 
+                               HorizontalOptions="Center" />
+                        <Label Text="{Binding CurrentUser.Role}" 
+                               TextColor="Gray" 
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Grid>
+                
+                <!-- Contact Information -->
+                <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" Margin="20,20,20,10">
                     <Border.Shadow>
                         <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
                     </Border.Shadow>
-                    <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="10">
-                        <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
-                            <Label Grid.Column="0" Text="Order #5678" FontAttributes="Bold" FontSize="18" />
-                            <Label Grid.Column="1" Text="Delivered" TextColor="#FEBE10" FontAttributes="Bold" />
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Contact Information" FontAttributes="Bold" FontSize="18" TextColor="#FEBE10" />
+                        
+                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto" RowSpacing="15" ColumnSpacing="15">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Username:" FontAttributes="Bold" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding CurrentUser.Username}" />
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="Email:" FontAttributes="Bold" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding CurrentUser.Email}" />
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="Phone:" FontAttributes="Bold" />
+                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding CurrentUser.Phone}" />
                         </Grid>
+                        
+                        <Button Text="Edit Profile" 
+                                Command="{Binding UpdateProfileCommand}" 
+                                BackgroundColor="#FEBE10" 
+                                TextColor="White" 
+                                CornerRadius="25" />
+                    </VerticalStackLayout>
+                </Border>
 
-                        <VerticalStackLayout Grid.Row="1" Spacing="5">
-                            <Label Text="Date: April 15, 2025" />
-                            <Label Text="Items: 3" />
-                            <Label Text="Total: €24.30" TextColor="#FEBE10" FontAttributes="Bold" />
-                        </VerticalStackLayout>
+                <!-- Order History -->
+                <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White" Margin="20,10,20,20">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Recent Orders" FontAttributes="Bold" FontSize="18" TextColor="#FEBE10" />
 
-                        <Button Grid.Row="2" Text="View Details" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
-                    </Grid>
+                        <!-- Order Item -->
+                        <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="10">
+                            <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0" Text="Order #5678" FontAttributes="Bold" FontSize="16" />
+                                <Label Grid.Column="1" Text="Delivered" TextColor="#FEBE10" FontAttributes="Bold" />
+                            </Grid>
+
+                            <VerticalStackLayout Grid.Row="1" Spacing="5">
+                                <Label Text="Date: April 15, 2025" />
+                                <Label Text="Items: 3" />
+                                <Label Text="Total: €24.30" TextColor="#FEBE10" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Row="2" Text="View Details" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1" Color="#f0f0f0" HorizontalOptions="Fill" />
+                        
+                        <!-- Order Item -->
+                        <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="10">
+                            <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0" Text="Order #5432" FontAttributes="Bold" FontSize="16" />
+                                <Label Grid.Column="1" Text="Completed" TextColor="Green" FontAttributes="Bold" />
+                            </Grid>
+
+                            <VerticalStackLayout Grid.Row="1" Spacing="5">
+                                <Label Text="Date: April 10, 2025" />
+                                <Label Text="Items: 2" />
+                                <Label Text="Total: €18.50" TextColor="#FEBE10" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Row="2" Text="View Details" BackgroundColor="#f0f0f0" TextColor="Black" CornerRadius="20" HeightRequest="40" FontSize="14" />
+                        </Grid>
+                        
+                        <Button Text="View All Orders" 
+                                Command="{Binding ViewAllOrdersCommand}"
+                                BackgroundColor="Transparent" 
+                                TextColor="#FEBE10" 
+                                BorderColor="#FEBE10"
+                                BorderWidth="1"
+                                CornerRadius="25" />
+                    </VerticalStackLayout>
                 </Border>
 
                 <!-- Logout Button -->
@@ -110,7 +156,7 @@
                         BackgroundColor="#f0f0f0" 
                         TextColor="Black" 
                         CornerRadius="25" 
-                        Margin="0,10,0,20" />
+                        Margin="20,0,20,30" />
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using RestoGestApp.Models;
 using RestoGestApp.Services;
 using RestoGestApp.Helpers;
+using System.Text;
 
 namespace RestoGestApp.ViewModels;
 
@@ -26,6 +27,9 @@ public partial class UserViewModel : BaseViewModel
     [ObservableProperty]
     private bool _isLoggedIn;
     
+    [ObservableProperty]
+    private List<Order> _recentOrders = new List<Order>();
+    
     public UserViewModel(DataService dataService, NotificationService notificationService) 
         : base(dataService, notificationService)
     {
@@ -46,6 +50,7 @@ public partial class UserViewModel : BaseViewModel
             FullName = string.Empty,
             Email = string.Empty,
             Phone = string.Empty,
+            ProfileImagePath = "profile_default.png",
             Role = UserRole.Client // Default role for new users
         };
         ConfirmPassword = string.Empty;
@@ -69,6 +74,9 @@ public partial class UserViewModel : BaseViewModel
                         {
                             CurrentUser = user;
                             IsLoggedIn = true;
+                            
+                            // Load recent orders
+                            LoadRecentOrders(userId);
                         });
                     }
                 });
@@ -78,6 +86,29 @@ public partial class UserViewModel : BaseViewModel
         {
             Console.WriteLine($"Error loading user session: {ex.Message}");
         }
+    }
+    
+    private void LoadRecentOrders(int userId)
+    {
+        Task.Run(async () =>
+        {
+            try
+            {
+                var orders = await DataService.GetOrdersByUserAsync(userId);
+                
+                // Get the most recent 5 orders
+                var recentOrders = orders.OrderByDescending(o => o.OrderDate).Take(5).ToList();
+                
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    RecentOrders = recentOrders;
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading recent orders: {ex.Message}");
+            }
+        });
     }
     
     private void SaveUserSession(User user)
@@ -130,6 +161,9 @@ public partial class UserViewModel : BaseViewModel
                 // Save user session
                 SaveUserSession(user);
                 
+                // Load recent orders
+                LoadRecentOrders(user.Id);
+                
                 await NotificationService.ShowToastAsync($"Welcome, {user.FullName}!");
                 
                 // Navigate to main app
@@ -157,6 +191,7 @@ public partial class UserViewModel : BaseViewModel
         IsLoggedIn = false;
         Username = string.Empty;
         Password = string.Empty;
+        RecentOrders.Clear();
         
         // Clear user session
         ClearUserSession();
@@ -189,6 +224,40 @@ public partial class UserViewModel : BaseViewModel
         {
             IsBusy = false;
         }
+    }
+    
+    [RelayCommand]
+    private async Task ViewOrderDetailsAsync(Order order)
+    {
+        if (order == null)
+            return;
+            
+        // Get the full order details including items
+        var fullOrder = await DataService.GetOrderAsync(order.Id);
+        
+        if (fullOrder == null)
+        {
+            await NotificationService.ShowAlertAsync("Error", "Order details not found.");
+            return;
+        }
+        
+        // Build the order details message
+        var message = new StringBuilder();
+        message.AppendLine($"Order #{fullOrder.Id}");
+        message.AppendLine($"Date: {fullOrder.OrderDate:MMMM d, yyyy}");
+        message.AppendLine($"Status: {fullOrder.Status}");
+        message.AppendLine();
+        message.AppendLine("Items:");
+        
+        foreach (var item in fullOrder.Items)
+        {
+            message.AppendLine($"- {item.MenuItemName} x{item.Quantity} (€{item.UnitPrice:F2})");
+        }
+        
+        message.AppendLine();
+        message.AppendLine($"Total: €{fullOrder.TotalAmount:F2}");
+        
+        await NotificationService.ShowAlertAsync("Order Details", message.ToString());
     }
     
     [RelayCommand]
@@ -303,5 +372,16 @@ public partial class UserViewModel : BaseViewModel
         {
             Console.WriteLine($"Navigation error: {ex.Message}");
         }
+    }
+    
+    [RelayCommand]
+    private async Task ViewAllOrdersAsync()
+    {
+        if (CurrentUser == null)
+            return;
+            
+        // This would navigate to a dedicated orders page
+        // For now, we'll just show a message
+        await NotificationService.ShowAlertAsync("Coming Soon", "The full order history feature will be available in the next update.");
     }
 }
