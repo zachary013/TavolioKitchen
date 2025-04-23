@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using RestoGestApp.Services;
 using RestoGestApp.ViewModels;
 using RestoGestApp.Views;
+using RestoGestApp.Helpers;
 
 namespace RestoGestApp;
 
@@ -25,6 +26,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<DataService>();
         builder.Services.AddSingleton<NotificationService>();
         builder.Services.AddSingleton<PaymentService>();
+        builder.Services.AddSingleton<AuthGuardService>();
 
         // Register view models
         builder.Services.AddSingleton<CartViewModel>();
@@ -39,6 +41,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ReservationPage>();
         builder.Services.AddSingleton<ProfilePage>();
         builder.Services.AddSingleton<ReportPage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<SignupPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -1,5 +1,6 @@
 using SQLite;
 using System.Diagnostics;
+using RestoGestApp.Helpers;
 
 namespace RestoGestApp.Services;
 
@@ -84,13 +85,41 @@ public class DatabaseService
             
             if (userCount == 0)
             {
-                // Seed users
+                // Seed users with hashed passwords
                 var users = new List<Models.User>
                 {
-                    new Models.User { Username = "admin", Password = "admin123", FullName = "Admin User", Role = Models.UserRole.Admin, Email = "admin@tavoliokitchen.com", Phone = "123-456-7890" },
-                    new Models.User { Username = "manager", Password = "manager123", FullName = "Manager User", Role = Models.UserRole.Manager, Email = "manager@tavoliokitchen.com", Phone = "123-456-7891" },
-                    new Models.User { Username = "staff", Password = "staff123", FullName = "Staff User", Role = Models.UserRole.Staff, Email = "staff@tavoliokitchen.com", Phone = "123-456-7892" },
-                    new Models.User { Username = "client", Password = "client123", FullName = "John Doe", Role = Models.UserRole.Client, Email = "john.doe@example.com", Phone = "123-456-7893" }
+                    new Models.User { 
+                        Username = "admin", 
+                        Password = PasswordHelper.HashPassword("admin123"), 
+                        FullName = "Admin User", 
+                        Role = Models.UserRole.Admin, 
+                        Email = "admin@tavoliokitchen.com", 
+                        Phone = "123-456-7890" 
+                    },
+                    new Models.User { 
+                        Username = "manager", 
+                        Password = PasswordHelper.HashPassword("manager123"), 
+                        FullName = "Manager User", 
+                        Role = Models.UserRole.Manager, 
+                        Email = "manager@tavoliokitchen.com", 
+                        Phone = "123-456-7891" 
+                    },
+                    new Models.User { 
+                        Username = "staff", 
+                        Password = PasswordHelper.HashPassword("staff123"), 
+                        FullName = "Staff User", 
+                        Role = Models.UserRole.Staff, 
+                        Email = "staff@tavoliokitchen.com", 
+                        Phone = "123-456-7892" 
+                    },
+                    new Models.User { 
+                        Username = "client", 
+                        Password = PasswordHelper.HashPassword("client123"), 
+                        FullName = "John Doe", 
+                        Role = Models.UserRole.Client, 
+                        Email = "john.doe@example.com", 
+                        Phone = "123-456-7893" 
+                    }
                 };
                 
                 foreach (var user in users)
@@ -190,6 +219,14 @@ public class DatabaseService
         return await _database.Table<Models.User>().Where(u => u.Username == username).FirstOrDefaultAsync();
     }
     
+    public async Task<Models.User?> GetUserByEmailAsync(string email)
+    {
+        await InitializeAsync();
+        if (_database == null)
+            throw new InvalidOperationException("Database not initialized");
+        return await _database.Table<Models.User>().Where(u => u.Email == email).FirstOrDefaultAsync();
+    }
+    
     public async Task<int> SaveUserAsync(Models.User user)
     {
         await InitializeAsync();
@@ -203,6 +240,14 @@ public class DatabaseService
         {
             return await _database.InsertAsync(user);
         }
+    }
+    
+    public async Task<int> DeleteUserAsync(Models.User user)
+    {
+        await InitializeAsync();
+        if (_database == null)
+            throw new InvalidOperationException("Database not initialized");
+        return await _database.DeleteAsync(user);
     }
     
     // Order Operations

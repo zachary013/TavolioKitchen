@@ -11,7 +11,7 @@
     BackgroundColor="White"
     ForegroundColor="#FEBE10">
 
-    <TabBar>
+    <TabBar Route="main">
         <Tab Title="Menu">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons"
@@ -19,7 +19,7 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="menu" />
         </Tab>
 
         <Tab Title="Cart">
@@ -29,7 +29,7 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:CartPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:CartPage}" Route="cart" />
         </Tab>
 
         <Tab Title="Reservations">
@@ -39,7 +39,7 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:ReservationPage}" Route="reservations" />
         </Tab>
 
         <Tab Title="Profile">
@@ -49,7 +49,11 @@
                                  Color="#FEBE10"
                                  Size="24" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="profile" />
         </Tab>
     </TabBar>
+    
+    <!-- Login and Signup Pages -->
+    <ShellContent Route="login" ContentTemplate="{DataTemplate views:LoginPage}" />
+    <ShellContent Route="signup" ContentTemplate="{DataTemplate views:SignupPage}" />
 </Shell>

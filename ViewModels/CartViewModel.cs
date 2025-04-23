@@ -24,6 +24,15 @@ public partial class CartViewModel : BaseViewModel
         CartItems = new ObservableCollection<OrderItem>();
     }
     
+    [RelayCommand]
+    public Task LoadCartItemsAsync()
+    {
+        // In a real app, you would load cart items from a database or local storage
+        // For now, we'll just use the in-memory collection
+        UpdateTotalAmount();
+        return Task.CompletedTask;
+    }
+    
     public Task AddItemAsync(MenuItemModel menuItem)
     {
         // Check if the item is already in the cart

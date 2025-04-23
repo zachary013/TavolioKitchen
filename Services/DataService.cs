@@ -1,4 +1,5 @@
 using RestoGestApp.Models;
+using RestoGestApp.Helpers;
 
 namespace RestoGestApp.Services;
 
@@ -51,6 +52,11 @@ public class DataService
     public Task<User> GetUserByUsernameAsync(string username)
     {
         return _databaseService.GetUserByUsernameAsync(username);
+    }
+    
+    public Task<User> GetUserByEmailAsync(string email)
+    {
+        return _databaseService.GetUserByEmailAsync(email);
     }
     
     public Task<int> SaveUserAsync(User user)
@@ -146,28 +152,28 @@ public class DataService
         }
         
         var menuItems = await _databaseService.GetMenuItemsAsync();
+        var menuItemsDict = menuItems.ToDictionary(m => m.Id);
         
+        var revenueByCategory = new Dictionary<string, decimal>();
         foreach (var item in orderItems)
         {
-            var menuItem = menuItems.FirstOrDefault(m => m.Id == item.MenuItemId);
-            if (menuItem != null)
+            if (menuItemsDict.TryGetValue(item.MenuItemId, out var menuItem))
             {
-                if (!report.RevenueByCategory.ContainsKey(menuItem.Category))
-                {
-                    report.RevenueByCategory[menuItem.Category] = 0;
-                }
+                var category = menuItem.Category;
+                var revenue = item.Quantity * item.UnitPrice;
                 
-                report.RevenueByCategory[menuItem.Category] += item.Subtotal;
+                if (revenueByCategory.ContainsKey(category))
+                {
+                    revenueByCategory[category] += revenue;
+                }
+                else
+                {
+                    revenueByCategory[category] = revenue;
+                }
             }
         }
         
-        // Get orders by status
-        foreach (var status in Enum.GetValues(typeof(OrderStatus)))
-        {
-            var statusString = status.ToString();
-            var count = orders.Count(o => o.Status == (OrderStatus)status);
-            report.OrdersByStatus[statusString] = count;
-        }
+        report.RevenueByCategory = revenueByCategory;
         
         // Get top selling items
         var topSellingItemIds = orderItems
@@ -188,16 +194,41 @@ public class DataService
         return report;
     }
     
-    // Additional business logic methods
-    public async Task<bool> LoginAsync(string username, string password)
+    // Enhanced authentication methods
+    public async Task<User> AuthenticateUserAsync(string username, string password)
     {
         var user = await _databaseService.GetUserByUsernameAsync(username);
-        if (user != null && user.Password == password)
+        
+        if (user != null)
         {
-            // In a real app, you would use a more secure password verification method
-            return true;
+            // First try direct comparison (for users created before hashing)
+            if (user.Password == password)
+            {
+                // Update to hashed password
+                user.Password = PasswordHelper.HashPassword(password);
+                await _databaseService.SaveUserAsync(user);
+                return user;
+            }
+            // Then try hashed comparison
+            else if (PasswordHelper.VerifyPassword(password, user.Password))
+            {
+                return user;
+            }
         }
-        return false;
+        
+        return null;
+    }
+    
+    public async Task<bool> IsUsernameAvailableAsync(string username)
+    {
+        var user = await _databaseService.GetUserByUsernameAsync(username);
+        return user == null;
+    }
+    
+    public async Task<bool> IsEmailAvailableAsync(string email)
+    {
+        var user = await _databaseService.GetUserByEmailAsync(email);
+        return user == null;
     }
     
     public async Task<decimal> CalculateOrderTotalAsync(int orderId)
