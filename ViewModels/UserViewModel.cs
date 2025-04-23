@@ -16,7 +16,7 @@ public partial class UserViewModel : BaseViewModel
     private User _newUser = new User();
     
     [ObservableProperty]
-    private string _username = string.Empty;
+    private string _email = string.Empty;
     
     [ObservableProperty]
     private string _password = string.Empty;
@@ -141,9 +141,9 @@ public partial class UserViewModel : BaseViewModel
         if (IsBusy)
             return;
             
-        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+        if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
         {
-            await NotificationService.ShowAlertAsync("Error", "Please enter both username and password.");
+            await NotificationService.ShowAlertAsync("Error", "Please enter both email and password.");
             return;
         }
         
@@ -151,7 +151,7 @@ public partial class UserViewModel : BaseViewModel
         {
             IsBusy = true;
             
-            var user = await DataService.AuthenticateUserAsync(Username, Password);
+            var user = await DataService.AuthenticateUserByEmailAsync(Email, Password);
             
             if (user != null)
             {
@@ -171,7 +171,7 @@ public partial class UserViewModel : BaseViewModel
             }
             else
             {
-                await NotificationService.ShowAlertAsync("Login Failed", "Invalid username or password.");
+                await NotificationService.ShowAlertAsync("Login Failed", "Invalid email or password.");
             }
         }
         catch (Exception ex)
@@ -189,7 +189,7 @@ public partial class UserViewModel : BaseViewModel
     {
         CurrentUser = null;
         IsLoggedIn = false;
-        Username = string.Empty;
+        Email = string.Empty;
         Password = string.Empty;
         RecentOrders.Clear();
         
@@ -362,7 +362,7 @@ public partial class UserViewModel : BaseViewModel
         try
         {
             // Reset fields
-            Username = string.Empty;
+            Email = string.Empty;
             Password = string.Empty;
             
             // Navigate to signup page

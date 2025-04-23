@@ -1,4 +1,3 @@
-using RestoGestApp.Services;
 using RestoGestApp.ViewModels;
 
 namespace RestoGestApp.Views;
@@ -6,29 +5,35 @@ namespace RestoGestApp.Views;
 public partial class ProfilePage : ContentPage
 {
     private readonly UserViewModel _viewModel;
-    private readonly AuthGuardService _authGuard;
     
-    public ProfilePage(UserViewModel viewModel, AuthGuardService authGuard)
+    public ProfilePage(UserViewModel viewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;
-        _authGuard = authGuard;
         BindingContext = viewModel;
     }
     
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
         
-        // Check if user is authenticated
-        if (!await _authGuard.CheckAuthenticationAsync())
-            return;
-            
-        // If not logged in, reset fields
+        // Reset fields when page appears if not logged in
         if (!_viewModel.IsLoggedIn)
         {
-            _viewModel.Username = string.Empty;
+            _viewModel.Email = string.Empty;
             _viewModel.Password = string.Empty;
         }
+    }
+    
+    // Prevent back navigation if this is the initial page
+    protected override bool OnBackButtonPressed()
+    {
+        // If we're on the profile page and not logged in, don't allow back navigation
+        if (!_viewModel.IsLoggedIn)
+        {
+            return true; // Cancel the back button
+        }
+        
+        return base.OnBackButtonPressed();
     }
 }

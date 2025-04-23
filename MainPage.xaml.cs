@@ -113,13 +113,19 @@ public partial class MainPage : ContentPage
             // Add menu items
             foreach (var menuItem in _menuItems)
             {
-                var frame = new Frame
+                var border = new Border
                 {
-                    BorderColor = Color.Parse("#f0f0f0"),
-                    CornerRadius = 10,
+                    StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(10) },
+                    Stroke = Color.Parse("#f0f0f0"),
                     Padding = new Thickness(15),
                     Margin = new Thickness(0, 5),
-                    HasShadow = true
+                    Shadow = new Shadow
+                    {
+                        Brush = Brush.Black,
+                        Offset = new Point(2, 2),
+                        Opacity = 0.1f,
+                        Radius = 4
+                    }
                 };
                 
                 var grid = new Grid
@@ -143,12 +149,12 @@ public partial class MainPage : ContentPage
                     Aspect = Aspect.AspectFill
                 };
                 
-                var imageContainer = new Frame
+                var imageContainer = new Border
                 {
                     Content = image,
-                    CornerRadius = 30,
-                    IsClippedToBounds = true,
-                    Padding = 0,
+                    StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(30) },
+                    // IsClippedToBounds is not available in Border, but we can use StrokeShape to clip
+                    Padding = new Thickness(0),
                     HeightRequest = 60,
                     WidthRequest = 60,
                     HorizontalOptions = LayoutOptions.Center,
@@ -228,8 +234,8 @@ public partial class MainPage : ContentPage
                 grid.Add(detailsLayout, 1, 0);
                 grid.Add(priceLayout, 2, 0);
                 
-                frame.Content = grid;
-                MenuItemsLayout.Add(frame);
+                border.Content = grid;
+                MenuItemsLayout.Add(border);
             }
         }
         catch (Exception ex)
