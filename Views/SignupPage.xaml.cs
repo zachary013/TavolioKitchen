@@ -2,11 +2,11 @@ using RestoGestApp.ViewModels;
 
 namespace RestoGestApp.Views;
 
-public partial class ProfilePage : ContentPage
+public partial class SignupPage : ContentPage
 {
     private readonly UserViewModel _viewModel;
     
-    public ProfilePage(UserViewModel viewModel)
+    public SignupPage(UserViewModel viewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;
@@ -17,11 +17,7 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
         
-        // If not logged in, reset fields
-        if (!_viewModel.IsLoggedIn)
-        {
-            _viewModel.Username = string.Empty;
-            _viewModel.Password = string.Empty;
-        }
+        // Initialize a new user object when the page appears
+        _viewModel.InitializeNewUser();
     }
 }

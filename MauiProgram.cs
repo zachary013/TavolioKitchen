@@ -39,6 +39,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ReservationPage>();
         builder.Services.AddSingleton<ProfilePage>();
         builder.Services.AddSingleton<ReportPage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<SignupPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

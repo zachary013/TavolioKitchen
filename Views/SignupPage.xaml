@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:RestoGestApp.ViewModels"
+             x:Class="RestoGestApp.Views.SignupPage"
+             x:DataType="viewmodels:UserViewModel"
+             Title="Create Account"
+             Shell.NavBarIsVisible="True"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25">
+            <!-- Header -->
+            <VerticalStackLayout Spacing="5" Margin="0,10,0,20">
+                <Label
+                    Text="TavolioKitchen"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    TextColor="#FEBE10"
+                    HorizontalOptions="Center" />
+
+                <Label
+                    Text="Create Account"
+                    FontSize="22"
+                    TextColor="Gray"
+                    HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Signup Form -->
+            <Border StrokeShape="RoundRectangle 10" Padding="20" BackgroundColor="White">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Personal Information" FontAttributes="Bold" FontSize="18" TextColor="#FEBE10" HorizontalOptions="Center" />
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Full Name" FontAttributes="Bold" TextColor="Gray" />
+                        <Entry Text="{Binding NewUser.FullName}" Placeholder="Enter your full name" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Email" FontAttributes="Bold" TextColor="Gray" />
+                        <Entry Text="{Binding NewUser.Email}" Placeholder="Enter your email" Keyboard="Email" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Phone" FontAttributes="Bold" TextColor="Gray" />
+                        <Entry Text="{Binding NewUser.Phone}" Placeholder="Enter your phone number" Keyboard="Telephone" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Username" FontAttributes="Bold" TextColor="Gray" />
+                        <Entry Text="{Binding NewUser.Username}" Placeholder="Choose a username" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Password" FontAttributes="Bold" TextColor="Gray" />
+                        <Entry Text="{Binding NewUser.Password}" Placeholder="Choose a password" IsPassword="True" />
+                    </VerticalStackLayout>
+
+                    <Button Text="Create Account" 
+                            Command="{Binding SignupCommand}" 
+                            BackgroundColor="#FEBE10" 
+                            TextColor="White" 
+                            CornerRadius="25"
+                            HeightRequest="50"
+                            FontAttributes="Bold" />
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Login Link -->
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Label Text="Already have an account?" TextColor="Gray" HorizontalOptions="Center" />
+                <Button Text="Login" 
+                        Command="{Binding NavigateToLoginCommand}"
+                        BackgroundColor="Transparent" 
+                        TextColor="#FEBE10" 
+                        BorderColor="#FEBE10"
+                        BorderWidth="1"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        FontAttributes="Bold" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
