@@ -19,10 +19,17 @@ public partial class AppShell : Shell
         // Navigate to the appropriate starting page
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            if (!_isLoggedIn)
+            try
             {
-                // If not logged in, navigate to login page
-                await GoToAsync("//login");
+                if (!_isLoggedIn)
+                {
+                    // If not logged in, navigate to login page
+                    await GoToAsync("//login");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Navigation error: {ex.Message}");
             }
         });
     }
@@ -30,17 +37,24 @@ public partial class AppShell : Shell
     // Method to handle login state changes
     public async Task HandleAuthenticationChanged(bool isLoggedIn)
     {
-        _isLoggedIn = isLoggedIn;
-        
-        if (isLoggedIn)
+        try
         {
-            // Navigate to main app when logged in
-            await GoToAsync("//main");
+            _isLoggedIn = isLoggedIn;
+            
+            if (isLoggedIn)
+            {
+                // Navigate to main app when logged in
+                await GoToAsync("//main");
+            }
+            else
+            {
+                // Navigate to login when logged out
+                await GoToAsync("//login");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            // Navigate to login when logged out
-            await GoToAsync("//login");
+            Console.WriteLine($"Authentication change error: {ex.Message}");
         }
     }
 }
