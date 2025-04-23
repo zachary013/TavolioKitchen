@@ -33,6 +33,19 @@ public partial class CartViewModel : BaseViewModel
         return Task.CompletedTask;
     }
     
+    [RelayCommand]
+    private async Task NavigateToMenuAsync()
+    {
+        try
+        {
+            await Shell.Current.GoToAsync("//main/menu");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Navigation error: {ex.Message}");
+        }
+    }
+    
     public Task AddItemAsync(MenuItemModel menuItem)
     {
         // Check if the item is already in the cart

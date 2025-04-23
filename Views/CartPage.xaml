@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:RestoGestApp.Models"
              x:Class="RestoGestApp.Views.CartPage"
              Title="Cart">
 
@@ -19,65 +20,99 @@
                 </VerticalStackLayout>
 
                 <!-- Empty Cart Message -->
-                <VerticalStackLayout IsVisible="false" VerticalOptions="Center" HorizontalOptions="Center" Spacing="20" Margin="0,50,0,0">
+                <VerticalStackLayout IsVisible="{Binding CartItems.Count, Converter={StaticResource IsZeroConverter}}" 
+                                    VerticalOptions="Center" 
+                                    HorizontalOptions="Center" 
+                                    Spacing="20" 
+                                    Margin="0,50,0,0">
                     <Image Source="cart_icon.png" HeightRequest="100" />
                     <Label Text="Your cart is empty" FontSize="20" TextColor="Gray" HorizontalOptions="Center" />
                     <Label Text="Add items from the menu" FontSize="16" TextColor="Gray" HorizontalOptions="Center" />
-                    <Button Text="Browse Menu" Style="{StaticResource RoundedButtonStyle}" Margin="0,20,0,0" />
+                    <Button Text="Browse Menu" 
+                            Command="{Binding NavigateToMenuCommand}"
+                            Style="{StaticResource RoundedButtonStyle}" 
+                            Margin="0,20,0,0" />
                 </VerticalStackLayout>
 
-                <!-- Cart Item 1 -->
-                <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
-                    <Border.Shadow>
-                        <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
-                    </Border.Shadow>
-                    <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="15">
-                        <Image Grid.RowSpan="2" Grid.Column="0" Source="dotnet_bot.png" WidthRequest="60" HeightRequest="60" />
+                <!-- Cart Items -->
+                <CollectionView ItemsSource="{Binding CartItems}" 
+                                EmptyView="No items in cart"
+                                IsVisible="{Binding CartItems.Count, Converter={StaticResource IsNotZeroConverter}}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:OrderItem">
+                            <Border StrokeShape="RoundRectangle 10" 
+                                    Padding="15" 
+                                    BackgroundColor="White"
+                                    Margin="0,0,0,10">
+                                <Border.Shadow>
+                                    <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
+                                </Border.Shadow>
+                                <Grid ColumnDefinitions="Auto, *, Auto" 
+                                      RowDefinitions="Auto, Auto" 
+                                      ColumnSpacing="15">
+                                    <Image Grid.RowSpan="2" 
+                                           Grid.Column="0" 
+                                           Source="pizza.png" 
+                                           WidthRequest="60" 
+                                           HeightRequest="60" />
 
-                        <Label Grid.Row="0" Grid.Column="1" Text="Margherita Pizza" FontAttributes="Bold" FontSize="16" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="$8.90" TextColor="Black" FontAttributes="Bold" />
+                                    <Label Grid.Row="0" 
+                                           Grid.Column="1" 
+                                           Text="{Binding MenuItemName}" 
+                                           FontAttributes="Bold" 
+                                           FontSize="16" />
+                                    <Label Grid.Row="1" 
+                                           Grid.Column="1" 
+                                           Text="{Binding UnitPrice, StringFormat='${0:F2}'}" 
+                                           TextColor="Black" 
+                                           FontAttributes="Bold" />
 
-                        <HorizontalStackLayout Grid.RowSpan="2" Grid.Column="2" Spacing="10" VerticalOptions="Center">
-                            <Button Text="-" Style="{StaticResource QuantityButtonStyle}" />
-                            <Label Text="1" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" />
-                            <Button Text="+" Style="{StaticResource BrandQuantityButtonStyle}" />
-                        </HorizontalStackLayout>
-                    </Grid>
-                </Border>
-
-                <!-- Cart Item 2 -->
-                <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="White">
-                    <Border.Shadow>
-                        <Shadow Brush="Black" Offset="2,2" Opacity="0.1" Radius="4" />
-                    </Border.Shadow>
-                    <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="15">
-                        <Image Grid.RowSpan="2" Grid.Column="0" Source="pizza.png" WidthRequest="60" HeightRequest="60" />
-
-                        <Label Grid.Row="0" Grid.Column="1" Text="Greek Salad" FontAttributes="Bold" FontSize="16" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="$4.90" TextColor="Black" FontAttributes="Bold" />
-
-                        <HorizontalStackLayout Grid.RowSpan="2" Grid.Column="2" Spacing="10" VerticalOptions="Center">
-                            <Button Text="-" Style="{StaticResource QuantityButtonStyle}" />
-                            <Label Text="1" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" />
-                            <Button Text="+" Style="{StaticResource BrandQuantityButtonStyle}" />
-                        </HorizontalStackLayout>
-                    </Grid>
-                </Border>
+                                    <HorizontalStackLayout Grid.RowSpan="2" 
+                                                          Grid.Column="2" 
+                                                          Spacing="10" 
+                                                          VerticalOptions="Center">
+                                        <Button Text="-" 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DecreaseQuantityCommand}" 
+                                                CommandParameter="{Binding .}"
+                                                Style="{StaticResource QuantityButtonStyle}" />
+                                        <Label Text="{Binding Quantity}" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Center" 
+                                               FontAttributes="Bold" />
+                                        <Button Text="+" 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IncreaseQuantityCommand}" 
+                                                CommandParameter="{Binding .}"
+                                                Style="{StaticResource BrandQuantityButtonStyle}" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
 
         <!-- Checkout Section -->
-        <VerticalStackLayout Grid.Row="1" Spacing="15" Padding="0,20,0,0">
+        <VerticalStackLayout Grid.Row="1" 
+                             Spacing="15" 
+                             Padding="0,20,0,0"
+                             IsVisible="{Binding CartItems.Count, Converter={StaticResource IsNotZeroConverter}}">
             <Border StrokeShape="RoundRectangle 10" Padding="15" BackgroundColor="#f8f8f8">
                 <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" RowSpacing="10">
                     <Label Grid.Row="0" Grid.Column="0" Text="Total" FontSize="16" />
-                    <Label Grid.Row="0" Grid.Column="1" Text="$13.80" FontAttributes="Bold" FontSize="18" TextColor="Black" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding TotalAmount, StringFormat='${0:F2}'}" FontAttributes="Bold" FontSize="18" TextColor="Black" />
                 </Grid>
             </Border>
 
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Fill">
-                <Button Text="Clear Cart" Style="{StaticResource OutlinedButtonStyle}" HorizontalOptions="FillAndExpand" />
-                <Button Text="Checkout" Style="{StaticResource RoundedButtonStyle}" HorizontalOptions="FillAndExpand" />
+                <Button Text="Clear Cart" 
+                        Command="{Binding ClearCartCommand}"
+                        Style="{StaticResource OutlinedButtonStyle}" 
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Checkout" 
+                        Command="{Binding CheckoutCommand}"
+                        Style="{StaticResource RoundedButtonStyle}" 
+                        HorizontalOptions="FillAndExpand" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Grid>
