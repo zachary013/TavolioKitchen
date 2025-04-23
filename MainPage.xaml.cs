@@ -7,241 +7,225 @@ namespace RestoGestApp;
 public partial class MainPage : ContentPage
 {
     private readonly DatabaseService _databaseService;
+    private readonly AuthGuardService _authGuard;
     private List<string> _categories = new List<string>();
     private List<MenuItemModel> _menuItems = new List<MenuItemModel>();
     private string _selectedCategory = "All";
 
-    public MainPage(DatabaseService databaseService)
+    public MainPage(DatabaseService databaseService, AuthGuardService authGuard)
     {
         InitializeComponent();
         _databaseService = databaseService;
+        _authGuard = authGuard;
 
         // Load data when the page appears
-        this.Appearing += async (sender, e) => await LoadDataAsync();
+        this.Appearing += OnPageAppearing;
+    }
+    
+    private async void OnPageAppearing(object sender, EventArgs e)
+    {
+        // Check if user is authenticated
+        if (!await _authGuard.CheckAuthenticationAsync())
+            return;
+            
+        await LoadDataAsync();
     }
 
     private async Task LoadDataAsync()
     {
         try
         {
-            // Show loading indicator
-            IsBusy = true;
-
             // Load categories
             _categories = await _databaseService.GetCategoriesAsync();
-
-            // Load all menu items
-            _menuItems = await _databaseService.GetMenuItemsAsync();
-
-            // Display categories
-            DisplayCategories();
-
-            // Display menu items
-            DisplayMenuItems();
-
-            // Output to console for testing
-            Console.WriteLine($"Loaded {_categories.Count} categories and {_menuItems.Count} menu items");
-
+            
+            // Add "All" category at the beginning
+            _categories.Insert(0, "All");
+            
+            // Clear existing categories
+            CategoriesLayout.Clear();
+            
+            // Add category buttons
             foreach (var category in _categories)
             {
-                Console.WriteLine($"Category: {category}");
+                var categoryButton = new Button
+                {
+                    Text = category,
+                    BackgroundColor = category == _selectedCategory ? Color.Parse("#FEBE10") : Colors.Transparent,
+                    TextColor = category == _selectedCategory ? Colors.White : Color.Parse("#FEBE10"),
+                    BorderColor = Color.Parse("#FEBE10"),
+                    BorderWidth = 1,
+                    CornerRadius = 20,
+                    Padding = new Thickness(15, 8),
+                    Margin = new Thickness(0, 5)
+                };
+                
+                categoryButton.Clicked += async (sender, e) => 
+                {
+                    // Update selected category
+                    _selectedCategory = category;
+                    
+                    // Update button styles
+                    foreach (var child in CategoriesLayout.Children)
+                    {
+                        if (child is Button btn)
+                        {
+                            btn.BackgroundColor = btn.Text == _selectedCategory ? Color.Parse("#FEBE10") : Colors.Transparent;
+                            btn.TextColor = btn.Text == _selectedCategory ? Colors.White : Color.Parse("#FEBE10");
+                        }
+                    }
+                    
+                    // Load menu items for selected category
+                    await LoadMenuItemsAsync();
+                };
+                
+                CategoriesLayout.Add(categoryButton);
             }
-
-            foreach (var item in _menuItems)
+            
+            // Load menu items
+            await LoadMenuItemsAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to load data: {ex.Message}", "OK");
+        }
+    }
+    
+    private async Task LoadMenuItemsAsync()
+    {
+        try
+        {
+            // Get menu items based on selected category
+            if (_selectedCategory == "All")
             {
-                Console.WriteLine($"Menu Item: {item.Name}, Price: {item.Price:C}, Category: {item.Category}");
+                _menuItems = await _databaseService.GetMenuItemsAsync();
+            }
+            else
+            {
+                _menuItems = await _databaseService.GetMenuItemsByCategoryAsync(_selectedCategory);
+            }
+            
+            // Clear existing menu items
+            MenuItemsLayout.Clear();
+            
+            // Add menu items
+            foreach (var menuItem in _menuItems)
+            {
+                var frame = new Frame
+                {
+                    BorderColor = Color.Parse("#f0f0f0"),
+                    CornerRadius = 10,
+                    Padding = new Thickness(15),
+                    Margin = new Thickness(0, 5),
+                    HasShadow = true
+                };
+                
+                var grid = new Grid
+                {
+                    ColumnDefinitions = 
+                    {
+                        new ColumnDefinition { Width = new GridLength(70) },
+                        new ColumnDefinition { Width = GridLength.Star },
+                        new ColumnDefinition { Width = GridLength.Auto }
+                    },
+                    RowSpacing = 10,
+                    ColumnSpacing = 15
+                };
+                
+                // Image
+                var image = new Image
+                {
+                    Source = menuItem.ImagePath,
+                    HeightRequest = 60,
+                    WidthRequest = 60,
+                    Aspect = Aspect.AspectFill
+                };
+                
+                var imageContainer = new Frame
+                {
+                    Content = image,
+                    CornerRadius = 30,
+                    IsClippedToBounds = true,
+                    Padding = 0,
+                    HeightRequest = 60,
+                    WidthRequest = 60,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                };
+                
+                // Item details
+                var detailsLayout = new VerticalStackLayout
+                {
+                    Spacing = 5
+                };
+                
+                var nameLabel = new Label
+                {
+                    Text = menuItem.Name,
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 16
+                };
+                
+                var descriptionLabel = new Label
+                {
+                    Text = menuItem.Description,
+                    FontSize = 12,
+                    TextColor = Colors.Gray,
+                    LineBreakMode = LineBreakMode.TailTruncation,
+                    MaxLines = 2
+                };
+                
+                detailsLayout.Add(nameLabel);
+                detailsLayout.Add(descriptionLabel);
+                
+                // Price and add button
+                var priceLayout = new VerticalStackLayout
+                {
+                    HorizontalOptions = LayoutOptions.End,
+                    VerticalOptions = LayoutOptions.Center,
+                    Spacing = 5
+                };
+                
+                var priceLabel = new Label
+                {
+                    Text = $"€{menuItem.Price:F2}",
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.Parse("#FEBE10"),
+                    HorizontalOptions = LayoutOptions.End
+                };
+                
+                var addButton = new Button
+                {
+                    Text = "Add",
+                    BackgroundColor = Color.Parse("#FEBE10"),
+                    TextColor = Colors.White,
+                    CornerRadius = 20,
+                    HeightRequest = 35,
+                    WidthRequest = 70,
+                    FontSize = 12,
+                    Padding = new Thickness(5, 0)
+                };
+                
+                addButton.Clicked += async (sender, e) => 
+                {
+                    await DisplayAlert("Add to Cart", $"{menuItem.Name} added to cart", "OK");
+                    // Here you would add the item to the cart
+                };
+                
+                priceLayout.Add(priceLabel);
+                priceLayout.Add(addButton);
+                
+                // Add elements to grid
+                grid.Add(imageContainer, 0, 0);
+                grid.Add(detailsLayout, 1, 0);
+                grid.Add(priceLayout, 2, 0);
+                
+                frame.Content = grid;
+                MenuItemsLayout.Add(frame);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading data: {ex.Message}");
-            await DisplayAlert("Error", "Failed to load menu data", "OK");
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
-
-    private void DisplayCategories()
-    {
-        // Clear existing categories
-        CategoriesLayout.Children.Clear();
-
-        // Add "All" category
-        var allCategoryBorder = new Border
-        {
-            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(20) },
-            Padding = new Thickness(15, 8),
-            BackgroundColor = _selectedCategory == "All" ? Color.Parse("#FEBE10") : Colors.Transparent,
-            Stroke = new SolidColorBrush(Color.Parse("#FEBE10"))
-        };
-
-        var allCategoryLabel = new Label
-        {
-            Text = "All",
-            TextColor = _selectedCategory == "All" ? Colors.White : Color.Parse("#FEBE10"),
-            FontAttributes = FontAttributes.Bold
-        };
-
-        allCategoryBorder.Content = allCategoryLabel;
-
-        var allCategoryTapGesture = new TapGestureRecognizer();
-        allCategoryTapGesture.Tapped += (s, e) =>
-        {
-            _selectedCategory = "All";
-            DisplayCategories();
-            DisplayMenuItems();
-        };
-        allCategoryBorder.GestureRecognizers.Add(allCategoryTapGesture);
-
-        CategoriesLayout.Children.Add(allCategoryBorder);
-
-        // Add other categories
-        foreach (var category in _categories)
-        {
-            var categoryBorder = new Border
-            {
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(20) },
-                Padding = new Thickness(15, 8),
-                BackgroundColor = _selectedCategory == category ? Color.Parse("#FEBE10") : Colors.Transparent,
-                Stroke = new SolidColorBrush(Color.Parse("#FEBE10"))
-            };
-
-            var categoryLabel = new Label
-            {
-                Text = category,
-                TextColor = _selectedCategory == category ? Colors.White : Color.Parse("#FEBE10"),
-                FontAttributes = FontAttributes.Bold
-            };
-
-            categoryBorder.Content = categoryLabel;
-
-            var categoryTapGesture = new TapGestureRecognizer();
-            var currentCategory = category; // Capture the current category
-            categoryTapGesture.Tapped += (s, e) =>
-            {
-                _selectedCategory = currentCategory;
-                DisplayCategories();
-                DisplayMenuItems();
-            };
-            categoryBorder.GestureRecognizers.Add(categoryTapGesture);
-
-            CategoriesLayout.Children.Add(categoryBorder);
-        }
-    }
-
-    private void DisplayMenuItems()
-    {
-        // Clear existing menu items
-        MenuItemsLayout.Children.Clear();
-
-        // Filter menu items by selected category
-        var filteredItems = _selectedCategory == "All"
-            ? _menuItems
-            : _menuItems.Where(item => item.Category == _selectedCategory).ToList();
-
-        // Display menu items
-        foreach (var item in filteredItems)
-        {
-            var itemBorder = new Border
-            {
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(10) },
-                Padding = new Thickness(15),
-                BackgroundColor = Colors.White,
-                Shadow = new Shadow
-                {
-                    Brush = Brush.Black,
-                    Offset = new Point(2, 2),
-                    Opacity = 0.1f,
-                    Radius = 4
-                }
-            };
-
-            var grid = new Grid
-            {
-                ColumnDefinitions =
-                {
-                    new ColumnDefinition { Width = GridLength.Auto },
-                    new ColumnDefinition { Width = GridLength.Star }
-                },
-                RowDefinitions =
-                {
-                    new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition { Height = GridLength.Auto }
-                },
-                ColumnSpacing = 15
-            };
-
-            var image = new Image
-            {
-                Source = item.ImagePath,
-                WidthRequest = 80,
-                HeightRequest = 80
-            };
-            Grid.SetRowSpan(image, 3);
-            Grid.SetColumn(image, 0);
-
-            var nameLabel = new Label
-            {
-                Text = item.Name,
-                FontAttributes = FontAttributes.Bold,
-                FontSize = 18
-            };
-            Grid.SetRow(nameLabel, 0);
-            Grid.SetColumn(nameLabel, 1);
-
-            var descriptionLabel = new Label
-            {
-                Text = item.Description,
-                TextColor = Colors.Gray,
-                FontSize = 14
-            };
-            Grid.SetRow(descriptionLabel, 1);
-            Grid.SetColumn(descriptionLabel, 1);
-
-            var priceAndButtonStack = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal,
-                Spacing = 10
-            };
-
-            var priceLabel = new Label
-            {
-                Text = $"${item.Price:F2}",
-                TextColor = Colors.Black,
-                FontAttributes = FontAttributes.Bold,
-                FontSize = 16,
-                VerticalOptions = LayoutOptions.Center
-            };
-
-            var addToCartButton = new Button
-            {
-                Text = "Add to Cart",
-                Style = (Style)Application.Current.Resources["AddToCartButtonStyle"],
-                HorizontalOptions = LayoutOptions.End
-            };
-
-            addToCartButton.Clicked += (s, e) =>
-            {
-                DisplayAlert("Add to Cart", $"{item.Name} added to cart", "OK");
-            };
-
-            priceAndButtonStack.Children.Add(priceLabel);
-            priceAndButtonStack.Children.Add(addToCartButton);
-
-            Grid.SetRow(priceAndButtonStack, 2);
-            Grid.SetColumn(priceAndButtonStack, 1);
-
-            grid.Children.Add(image);
-            grid.Children.Add(nameLabel);
-            grid.Children.Add(descriptionLabel);
-            grid.Children.Add(priceAndButtonStack);
-
-            itemBorder.Content = grid;
-
-            MenuItemsLayout.Children.Add(itemBorder);
+            await DisplayAlert("Error", $"Failed to load menu items: {ex.Message}", "OK");
         }
     }
 }

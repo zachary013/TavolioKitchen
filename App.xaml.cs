@@ -1,4 +1,5 @@
 using RestoGestApp.Services;
+using RestoGestApp.Views;
 
 namespace RestoGestApp;
 
@@ -17,8 +18,11 @@ public partial class App : Application
             // Initialize the database
             Task.Run(async () => await InitializeDatabaseAsync());
             
+            // Check if user is logged in
+            bool isLoggedIn = Preferences.Get("CurrentUserId", 0) > 0;
+            
             // Use AppShell for navigation
-            MainPage = new AppShell();
+            MainPage = new AppShell(isLoggedIn);
         }
         catch (Exception ex)
         {
