@@ -6,6 +6,8 @@
 
 Tavolio Kitchen is a cross-platform restaurant management application built with .NET MAUI (Multi-platform App UI). This application is designed to help restaurant owners and staff manage their operations efficiently across multiple platforms including iOS and macOS (via Catalyst).
 
+---
+
 ## Screenshots
 <img width="363" alt="Screenshot 2025-04-24 at 00 36 14" src="https://github.com/user-attachments/assets/617ddf9d-2e13-48b3-ac3c-b2885596874b" />
 
@@ -17,6 +19,7 @@ Tavolio Kitchen is a cross-platform restaurant management application built with
 
 <img width="368" alt="Screenshot 2025-04-24 at 00 35 49" src="https://github.com/user-attachments/assets/61c62f63-1a9d-485a-8972-6352a8afdb29" />
 
+---
 
 ## ✨ Features
 
@@ -28,6 +31,8 @@ Tavolio Kitchen is a cross-platform restaurant management application built with
 - 💳 **Simulated Payments** - Process transactions 
 - 📊 **Statistics/Reports** - Track revenue, orders, and reservations
 
+---
+
 ## 🛠️ Technologies Used
 
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" width="16" height="16"/> **`.NET MAUI`**: Cross-platform framework for building native mobile and desktop apps
@@ -36,6 +41,8 @@ Tavolio Kitchen is a cross-platform restaurant management application built with
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xamarin/xamarin-original.svg" width="16" height="16"/> **`XAML`**: For designing the user interface
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" width="16" height="16"/> **`SQLite`**: For local database storage
 - 📐 **`MVVM Pattern`**: Using CommunityToolkit.Mvvm
+
+---
 
 ## 📁 Project Structure
 
@@ -74,6 +81,8 @@ RestoGestApp/
 └── MauiProgram.cs         # MAUI application entry point
 ```
 
+---
+
 ## ▶️ Run Instructions
 
 ### Prerequisites
@@ -81,6 +90,8 @@ RestoGestApp/
 - 📦 [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - 💻 [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) or [JetBrains Rider](https://www.jetbrains.com/rider/) with MAUI workload
 - 🍎 For iOS/macOS development: Mac with Xcode 15+
+
+---
 
 ### Running on iOS
 
