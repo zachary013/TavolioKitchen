@@ -6,8 +6,6 @@
 
 Tavolio Kitchen is a cross-platform restaurant management application built with .NET MAUI (Multi-platform App UI). This application is designed to help restaurant owners and staff manage their operations efficiently across multiple platforms including iOS and macOS (via Catalyst).
 
----
-
 ## Screenshots
 <img width="363" alt="Screenshot 2025-04-24 at 00 36 14" src="https://github.com/user-attachments/assets/617ddf9d-2e13-48b3-ac3c-b2885596874b" />
 
@@ -19,8 +17,6 @@ Tavolio Kitchen is a cross-platform restaurant management application built with
 
 <img width="368" alt="Screenshot 2025-04-24 at 00 35 49" src="https://github.com/user-attachments/assets/61c62f63-1a9d-485a-8972-6352a8afdb29" />
 
----
-
 ## ✨ Features
 
 - 📋 **Menu Management** - Categories, dishes, prices, and images
@@ -31,7 +27,6 @@ Tavolio Kitchen is a cross-platform restaurant management application built with
 - 💳 **Simulated Payments** - Process transactions 
 - 📊 **Statistics/Reports** - Track revenue, orders, and reservations
 
----
 
 ## 🛠️ Technologies Used
 
@@ -42,7 +37,6 @@ Tavolio Kitchen is a cross-platform restaurant management application built with
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" width="16" height="16"/> **`SQLite`**: For local database storage
 - 📐 **`MVVM Pattern`**: Using CommunityToolkit.Mvvm
 
----
 
 ## 📁 Project Structure
 
@@ -81,7 +75,6 @@ RestoGestApp/
 └── MauiProgram.cs         # MAUI application entry point
 ```
 
----
 
 ## ▶️ Run Instructions
 
@@ -90,8 +83,6 @@ RestoGestApp/
 - 📦 [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - 💻 [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) or [JetBrains Rider](https://www.jetbrains.com/rider/) with MAUI workload
 - 🍎 For iOS/macOS development: Mac with Xcode 15+
-
----
 
 ### Running on iOS
 
@@ -120,7 +111,6 @@ RestoGestApp/
 |---------------------------------------------------------------------------------------------------------|------|--------|
 | <img src="https://github.com/zachary013.png" width="50" height="50" style="border-radius: 50%"/>        | Zakariae Azarkan | [@zachary013](https://github.com/zachary013) |
 
----
 
 ## 🤝 Contributing
 This is my uni work, so I’m not looking for pull requests—but feel free to fork it and tweak it for your own deep learning adventures! Got feedback? Hit me up via GitHub Issues.
