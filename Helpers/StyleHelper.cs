@@ -1,101 +1,91 @@
-using Microsoft.Maui.Controls;
-using System;
+using Microsoft.Maui.Controls.Shapes;
 
-namespace RestoGestApp.Helpers
+namespace RestoGestApp.Helpers;
+
+public static class StyleHelper
 {
-    /// <summary>
-    /// Helper class to provide consistent access to application styles from C# code
-    /// </summary>
-    public static class StyleHelper
+    // Colors
+    public static readonly Color PrimaryColor = Color.Parse("#FEBE10");
+    public static readonly Color SecondaryColor = Color.Parse("#333333");
+    public static readonly Color AccentColor = Color.Parse("#FF5252");
+    public static readonly Color BackgroundColor = Color.Parse("#f8f8f8");
+    public static readonly Color SurfaceColor = Colors.White;
+    public static readonly Color TextPrimaryColor = Color.Parse("#333333");
+    public static readonly Color TextSecondaryColor = Color.Parse("#666666");
+    public static readonly Color TextTertiaryColor = Color.Parse("#999999");
+    
+    // Button Styles
+    public static Style CreatePrimaryButtonStyle()
     {
-        // Font Sizes
-        public static double FontSizeSmall => GetDoubleResource("FontSizeSmall", 12);
-        public static double FontSizeNormal => GetDoubleResource("FontSizeNormal", 14);
-        public static double FontSizeMedium => GetDoubleResource("FontSizeMedium", 16);
-        public static double FontSizeLarge => GetDoubleResource("FontSizeLarge", 18);
-        public static double FontSizeExtraLarge => GetDoubleResource("FontSizeExtraLarge", 20);
-        public static double FontSizeHeader => GetDoubleResource("FontSizeHeader", 24);
-        public static double FontSizeTitle => GetDoubleResource("FontSizeTitle", 28);
-        public static double FontSizeBrand => GetDoubleResource("FontSizeBrand", 32);
-
-        // Spacing
-        public static double SpacingSmall => GetDoubleResource("SpacingSmall", 5);
-        public static double SpacingMedium => GetDoubleResource("SpacingMedium", 10);
-        public static double SpacingLarge => GetDoubleResource("SpacingLarge", 15);
-        public static double SpacingExtraLarge => GetDoubleResource("SpacingExtraLarge", 20);
-
-        // Corner Radius
-        public static double ButtonCornerRadius => GetDoubleResource("ButtonCornerRadius", 25);
-        public static double SmallButtonCornerRadius => GetDoubleResource("SmallButtonCornerRadius", 20);
-        public static double CardCornerRadius => GetDoubleResource("CardCornerRadius", 10);
-
-        // Element Sizes
-        public static double ButtonHeight => GetDoubleResource("ButtonHeight", 40);
-        public static double SmallButtonHeight => GetDoubleResource("SmallButtonHeight", 35);
-        public static double IconButtonSize => GetDoubleResource("IconButtonSize", 40);
-
-        // Styles
-        // Button Styles
-        public static Style PrimaryButtonStyle => GetStyleResource("PrimaryButtonStyle");
-        public static Style RoundedButtonStyle => GetStyleResource("RoundedButtonStyle");
-        public static Style PlainButtonStyle => GetStyleResource("PlainButtonStyle");
-        public static Style OutlinedButtonStyle => GetStyleResource("OutlinedButtonStyle");
-        public static Style BrandButtonStyle => GetStyleResource("BrandButtonStyle");
-        public static Style BrandOutlinedButtonStyle => GetStyleResource("BrandOutlinedButtonStyle");
-        public static Style SmallButtonStyle => GetStyleResource("SmallButtonStyle");
-        public static Style BrandSmallButtonStyle => GetStyleResource("BrandSmallButtonStyle");
-        public static Style DestructiveButtonStyle => GetStyleResource("DestructiveButtonStyle");
-        public static Style DestructivePlainButtonStyle => GetStyleResource("DestructivePlainButtonStyle");
-        public static Style AddToCartButtonStyle => GetStyleResource("AddToCartButtonStyle");
-        public static Style QuantityButtonStyle => GetStyleResource("QuantityButtonStyle");
-        public static Style BrandQuantityButtonStyle => GetStyleResource("BrandQuantityButtonStyle");
-
-        // Label and Border Styles
-        public static Style HeaderLabelStyle => GetStyleResource("HeaderLabel");
-        public static Style TitleLabelStyle => GetStyleResource("TitleLabel");
-        public static Style BrandLabelStyle => GetStyleResource("BrandLabel");
-        public static Style SubtitleLabelStyle => GetStyleResource("SubtitleLabel");
-        public static Style PriceLabelStyle => GetStyleResource("PriceLabel");
-        public static Style CardBorderStyle => GetStyleResource("CardBorder");
-        public static Style CategoryBorderStyle => GetStyleResource("CategoryBorder");
-
-        /// <summary>
-        /// Gets a double value from the application resources
-        /// </summary>
-        /// <param name="resourceKey">The resource key</param>
-        /// <param name="defaultValue">Default value if resource not found</param>
-        /// <returns>The double value, or the default if not found</returns>
-        private static double GetDoubleResource(string resourceKey, double defaultValue)
+        var style = new Style(typeof(Button));
+        style.Setters.Add(new Setter { Property = Button.BackgroundColorProperty, Value = PrimaryColor });
+        style.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.White });
+        style.Setters.Add(new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold });
+        style.Setters.Add(new Setter { Property = Button.CornerRadiusProperty, Value = 10 });
+        style.Setters.Add(new Setter { Property = Button.HeightRequestProperty, Value = 50 });
+        return style;
+    }
+    
+    public static Style CreateSecondaryButtonStyle()
+    {
+        var style = new Style(typeof(Button));
+        style.Setters.Add(new Setter { Property = Button.BackgroundColorProperty, Value = Colors.Transparent });
+        style.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = PrimaryColor });
+        style.Setters.Add(new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold });
+        style.Setters.Add(new Setter { Property = Button.BorderColorProperty, Value = PrimaryColor });
+        style.Setters.Add(new Setter { Property = Button.BorderWidthProperty, Value = 1 });
+        style.Setters.Add(new Setter { Property = Button.CornerRadiusProperty, Value = 10 });
+        style.Setters.Add(new Setter { Property = Button.HeightRequestProperty, Value = 50 });
+        return style;
+    }
+    
+    public static Style CreateTextButtonStyle()
+    {
+        var style = new Style(typeof(Button));
+        style.Setters.Add(new Setter { Property = Button.BackgroundColorProperty, Value = Colors.Transparent });
+        style.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = PrimaryColor });
+        style.Setters.Add(new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold });
+        style.Setters.Add(new Setter { Property = Button.BorderWidthProperty, Value = 0 });
+        style.Setters.Add(new Setter { Property = Button.PaddingProperty, Value = new Thickness(0) });
+        return style;
+    }
+    
+    // Card Style
+    public static Border CreateCard(View content)
+    {
+        if (content == null)
+            throw new ArgumentNullException(nameof(content));
+            
+        var border = new Border
         {
-            if (Application.Current?.Resources.TryGetValue(resourceKey, out var value) == true)
-            {
-                if (value is double doubleValue)
-                {
-                    return doubleValue;
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine($"Warning: Double resource '{resourceKey}' not found");
-            return defaultValue;
-        }
-
-        /// <summary>
-        /// Gets a style from the application resources
-        /// </summary>
-        /// <param name="resourceKey">The resource key of the style</param>
-        /// <returns>The style, or null if not found</returns>
-        private static Style GetStyleResource(string resourceKey)
+            StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(10) },
+            Stroke = Colors.Transparent,
+            BackgroundColor = SurfaceColor,
+            Padding = new Thickness(15),
+            Content = content
+        };
+        
+        border.Shadow = new Shadow
         {
-            if (Application.Current?.Resources.TryGetValue(resourceKey, out var value) == true)
-            {
-                if (value is Style style)
-                {
-                    return style;
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine($"Warning: Style resource '{resourceKey}' not found");
-            return null;
-        }
+            Brush = Brush.Black,
+            Offset = new Point(0, 2),
+            Opacity = 0.1f,
+            Radius = 4
+        };
+        
+        return border;
+    }
+    
+    // Entry Style
+    public static Style CreateEntryStyle()
+    {
+        var style = new Style(typeof(Entry));
+        style.Setters.Add(new Setter { Property = Entry.BackgroundColorProperty, Value = Color.Parse("#f5f5f5") });
+        style.Setters.Add(new Setter { Property = Entry.TextColorProperty, Value = TextPrimaryColor });
+        style.Setters.Add(new Setter { Property = Entry.PlaceholderColorProperty, Value = TextTertiaryColor });
+        style.Setters.Add(new Setter { Property = Entry.HeightRequestProperty, Value = 50 });
+        // Entry doesn't have a PaddingProperty in .NET MAUI
+        // style.Setters.Add(new Setter { Property = Entry.PaddingProperty, Value = new Thickness(15, 0) });
+        return style;
     }
 }

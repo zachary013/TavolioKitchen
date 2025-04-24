@@ -1,5 +1,5 @@
-using RestoGestApp.Models;
 using RestoGestApp.Helpers;
+using RestoGestApp.Models;
 
 namespace RestoGestApp.Services;
 
@@ -13,207 +13,61 @@ public class DataService
     }
     
     // Menu Item Operations
-    public Task<List<MenuItemModel>> GetMenuItemsAsync()
+    public async Task<List<MenuItemModel>> GetMenuItemsAsync()
     {
-        return _databaseService.GetMenuItemsAsync();
+        return await _databaseService.GetMenuItemsAsync();
     }
     
-    public Task<List<MenuItemModel>> GetMenuItemsByCategoryAsync(string category)
+    public async Task<List<MenuItemModel>> GetMenuItemsByCategoryAsync(string category)
     {
-        return _databaseService.GetMenuItemsByCategoryAsync(category);
+        return await _databaseService.GetMenuItemsByCategoryAsync(category);
     }
     
-    public Task<List<string>> GetCategoriesAsync()
+    public async Task<List<string>> GetCategoriesAsync()
     {
-        return _databaseService.GetCategoriesAsync();
+        return await _databaseService.GetCategoriesAsync();
     }
     
-    public Task<MenuItemModel> GetMenuItemAsync(int id)
+    public async Task<MenuItemModel?> GetMenuItemAsync(int id)
     {
-        return _databaseService.GetMenuItemAsync(id);
+        return await _databaseService.GetMenuItemAsync(id);
     }
     
-    public Task<int> SaveMenuItemAsync(MenuItemModel item)
+    public async Task<int> SaveMenuItemAsync(MenuItemModel item)
     {
-        return _databaseService.SaveMenuItemAsync(item);
+        return await _databaseService.SaveMenuItemAsync(item);
     }
     
     // User Operations
-    public Task<List<User>> GetUsersAsync()
+    public async Task<List<User>> GetUsersAsync()
     {
-        return _databaseService.GetUsersAsync();
+        return await _databaseService.GetUsersAsync();
     }
     
-    public Task<User> GetUserAsync(int id)
+    public async Task<User?> GetUserAsync(int id)
     {
-        return _databaseService.GetUserAsync(id);
+        return await _databaseService.GetUserAsync(id);
     }
     
-    public Task<User> GetUserByUsernameAsync(string username)
-    {
-        return _databaseService.GetUserByUsernameAsync(username);
-    }
-    
-    public Task<User> GetUserByEmailAsync(string email)
-    {
-        return _databaseService.GetUserByEmailAsync(email);
-    }
-    
-    public Task<int> SaveUserAsync(User user)
-    {
-        return _databaseService.SaveUserAsync(user);
-    }
-    
-    // Order Operations
-    public Task<List<Order>> GetOrdersAsync()
-    {
-        return _databaseService.GetOrdersAsync();
-    }
-    
-    public Task<List<Order>> GetOrdersByUserAsync(int userId)
-    {
-        return _databaseService.GetOrdersByUserAsync(userId);
-    }
-    
-    public Task<Order> GetOrderAsync(int id)
-    {
-        return _databaseService.GetOrderAsync(id);
-    }
-    
-    public Task<int> SaveOrderAsync(Order order)
-    {
-        return _databaseService.SaveOrderAsync(order);
-    }
-    
-    // OrderItem Operations
-    public Task<List<OrderItem>> GetOrderItemsAsync(int orderId)
-    {
-        return _databaseService.GetOrderItemsAsync(orderId);
-    }
-    
-    public Task<int> SaveOrderItemAsync(OrderItem item)
-    {
-        return _databaseService.SaveOrderItemAsync(item);
-    }
-    
-    // Reservation Operations
-    public Task<List<Reservation>> GetReservationsAsync()
-    {
-        return _databaseService.GetReservationsAsync();
-    }
-    
-    public Task<List<Reservation>> GetReservationsByUserAsync(int userId)
-    {
-        return _databaseService.GetReservationsByUserAsync(userId);
-    }
-    
-    public Task<Reservation> GetReservationAsync(int id)
-    {
-        return _databaseService.GetReservationAsync(id);
-    }
-    
-    public Task<int> SaveReservationAsync(Reservation reservation)
-    {
-        return _databaseService.SaveReservationAsync(reservation);
-    }
-    
-    public Task<int> DeleteReservationAsync(Reservation reservation)
-    {
-        return _databaseService.DeleteReservationAsync(reservation);
-    }
-    
-    // Report Operations
-    public async Task<Report> GenerateReportAsync(DateTime startDate, DateTime endDate)
-    {
-        var report = new Report
-        {
-            Date = DateTime.Now
-        };
-        
-        // Get all orders in the date range
-        var orders = await _databaseService.GetOrdersAsync();
-        orders = orders.Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate).ToList();
-        
-        report.TotalOrders = orders.Count;
-        report.TotalRevenue = orders.Sum(o => o.TotalAmount);
-        
-        // Get all reservations in the date range
-        var reservations = await _databaseService.GetReservationsAsync();
-        reservations = reservations.Where(r => r.ReservationDate >= startDate && r.ReservationDate <= endDate).ToList();
-        
-        report.TotalReservations = reservations.Count;
-        
-        // Get revenue by category
-        var orderItems = new List<OrderItem>();
-        foreach (var order in orders)
-        {
-            var items = await _databaseService.GetOrderItemsAsync(order.Id);
-            orderItems.AddRange(items);
-        }
-        
-        var menuItems = await _databaseService.GetMenuItemsAsync();
-        var menuItemsDict = menuItems.ToDictionary(m => m.Id);
-        
-        var revenueByCategory = new Dictionary<string, decimal>();
-        foreach (var item in orderItems)
-        {
-            if (menuItemsDict.TryGetValue(item.MenuItemId, out var menuItem))
-            {
-                var category = menuItem.Category;
-                var revenue = item.Quantity * item.UnitPrice;
-                
-                if (revenueByCategory.ContainsKey(category))
-                {
-                    revenueByCategory[category] += revenue;
-                }
-                else
-                {
-                    revenueByCategory[category] = revenue;
-                }
-            }
-        }
-        
-        report.RevenueByCategory = revenueByCategory;
-        
-        // Get top selling items
-        var topSellingItemIds = orderItems
-            .GroupBy(oi => oi.MenuItemId)
-            .OrderByDescending(g => g.Sum(oi => oi.Quantity))
-            .Take(5)
-            .Select(g => g.Key);
-            
-        foreach (var id in topSellingItemIds)
-        {
-            var menuItem = menuItems.FirstOrDefault(m => m.Id == id);
-            if (menuItem != null)
-            {
-                report.TopSellingItems.Add(menuItem);
-            }
-        }
-        
-        return report;
-    }
-    
-    // Enhanced authentication methods
-    public async Task<User> AuthenticateUserAsync(string username, string password)
+    public async Task<User?> AuthenticateUserAsync(string username, string password)
     {
         var user = await _databaseService.GetUserByUsernameAsync(username);
         
-        if (user != null)
+        if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
         {
-            // First try direct comparison (for users created before hashing)
-            if (user.Password == password)
-            {
-                // Update to hashed password
-                user.Password = PasswordHelper.HashPassword(password);
-                await _databaseService.SaveUserAsync(user);
-                return user;
-            }
-            // Then try hashed comparison
-            else if (PasswordHelper.VerifyPassword(password, user.Password))
-            {
-                return user;
-            }
+            return user;
+        }
+        
+        return null;
+    }
+    
+    public async Task<User?> AuthenticateUserByEmailAsync(string email, string password)
+    {
+        var user = await _databaseService.GetUserByEmailAsync(email);
+        
+        if (user != null && PasswordHelper.VerifyPassword(password, user.Password))
+        {
+            return user;
         }
         
         return null;
@@ -231,19 +85,175 @@ public class DataService
         return user == null;
     }
     
-    public async Task<decimal> CalculateOrderTotalAsync(int orderId)
+    public async Task<int> SaveUserAsync(User user)
     {
-        var orderItems = await _databaseService.GetOrderItemsAsync(orderId);
-        return orderItems.Sum(item => item.Quantity * item.UnitPrice);
+        return await _databaseService.SaveUserAsync(user);
+    }
+    
+    // Order Operations
+    public async Task<List<Order>> GetOrdersAsync()
+    {
+        return await _databaseService.GetOrdersAsync();
+    }
+    
+    public async Task<List<Order>> GetOrdersByUserAsync(int userId)
+    {
+        return await _databaseService.GetOrdersByUserAsync(userId);
+    }
+    
+    public async Task<Order?> GetOrderAsync(int id)
+    {
+        return await _databaseService.GetOrderAsync(id);
+    }
+    
+    public async Task<int> SaveOrderAsync(Order order)
+    {
+        return await _databaseService.SaveOrderAsync(order);
+    }
+    
+    // OrderItem Operations
+    public async Task<List<OrderItem>> GetOrderItemsAsync(int orderId)
+    {
+        return await _databaseService.GetOrderItemsAsync(orderId);
+    }
+    
+    public async Task<int> SaveOrderItemAsync(OrderItem item)
+    {
+        return await _databaseService.SaveOrderItemAsync(item);
+    }
+    
+    // Reservation Operations
+    public async Task<List<Reservation>> GetReservationsAsync()
+    {
+        return await _databaseService.GetReservationsAsync();
+    }
+    
+    public async Task<List<Reservation>> GetReservationsByUserAsync(int userId)
+    {
+        return await _databaseService.GetReservationsByUserAsync(userId);
+    }
+    
+    public async Task<Reservation?> GetReservationAsync(int id)
+    {
+        return await _databaseService.GetReservationAsync(id);
     }
     
     public async Task<bool> IsTableAvailableAsync(int tableNumber, DateTime date, TimeSpan time)
     {
         var reservations = await _databaseService.GetReservationsAsync();
+        
+        // Check if there's any reservation for the same table, date and time
         return !reservations.Any(r => 
             r.TableNumber == tableNumber && 
             r.ReservationDate.Date == date.Date && 
-            Math.Abs((r.ReservationTime - time).TotalHours) < 2 &&
-            r.Status != ReservationStatus.Cancelled);
+            Math.Abs((r.ReservationTime - time).TotalMinutes) < 90); // Within 90 minutes
+    }
+    
+    public async Task<int> SaveReservationAsync(Reservation reservation)
+    {
+        return await _databaseService.SaveReservationAsync(reservation);
+    }
+    
+    public async Task<int> CancelReservationAsync(Reservation reservation)
+    {
+        reservation.Status = ReservationStatus.Cancelled;
+        return await _databaseService.SaveReservationAsync(reservation);
+    }
+    
+    // Report Operations
+    public async Task<Report> GenerateReportAsync(DateTime startDate, DateTime endDate, ReportType reportType)
+    {
+        // Create a new report
+        var report = new Report
+        {
+            StartDate = startDate,
+            EndDate = endDate,
+            Type = reportType,
+            GeneratedDate = DateTime.Now
+        };
+        
+        try
+        {
+            // Get all orders within the date range
+            var orders = await _databaseService.GetOrdersAsync();
+            var filteredOrders = orders.Where(o => 
+                o.OrderDate >= startDate && 
+                o.OrderDate <= endDate).ToList();
+            
+            // Calculate metrics based on report type
+            switch (reportType)
+            {
+                case ReportType.Sales:
+                    // Calculate total sales
+                    report.TotalSales = filteredOrders.Sum(o => o.TotalAmount);
+                    report.OrderCount = filteredOrders.Count;
+                    report.AverageOrderValue = filteredOrders.Count > 0 
+                        ? report.TotalSales / filteredOrders.Count 
+                        : 0;
+                    
+                    // Get top selling items
+                    var orderItems = new List<OrderItem>();
+                    foreach (var order in filteredOrders)
+                    {
+                        var items = await _databaseService.GetOrderItemsAsync(order.Id);
+                        orderItems.AddRange(items);
+                    }
+                    
+                    var topItems = orderItems
+                        .GroupBy(i => i.MenuItemId)
+                        .Select(g => new { 
+                            MenuItemId = g.Key, 
+                            Name = g.First().MenuItemName,
+                            Quantity = g.Sum(i => i.Quantity),
+                            Revenue = g.Sum(i => i.Subtotal)
+                        })
+                        .OrderByDescending(x => x.Revenue)
+                        .Take(5)
+                        .ToList();
+                    
+                    report.TopSellingItems = topItems.Select(i => $"{i.Name} (€{i.Revenue:F2})").ToList();
+                    break;
+                    
+                case ReportType.Inventory:
+                    // For inventory report, we would need inventory data
+                    // This is a placeholder since we don't have inventory tracking
+                    report.Notes = "Inventory tracking not implemented yet.";
+                    break;
+                    
+                case ReportType.CustomerActivity:
+                    // Calculate customer metrics
+                    var userOrders = filteredOrders
+                        .GroupBy(o => o.UserId)
+                        .Select(g => new {
+                            UserId = g.Key,
+                            OrderCount = g.Count(),
+                            TotalSpent = g.Sum(o => o.TotalAmount)
+                        })
+                        .OrderByDescending(x => x.TotalSpent)
+                        .Take(5)
+                        .ToList();
+                    
+                    // Get user details
+                    var topCustomers = new List<string>();
+                    foreach (var userOrder in userOrders)
+                    {
+                        var user = await _databaseService.GetUserAsync(userOrder.UserId);
+                        if (user != null)
+                        {
+                            topCustomers.Add($"{user.FullName} (€{userOrder.TotalSpent:F2}, {userOrder.OrderCount} orders)");
+                        }
+                    }
+                    
+                    report.TopCustomers = topCustomers;
+                    break;
+            }
+            
+            return report;
+        }
+        catch (Exception ex)
+        {
+            report.Notes = $"Error generating report: {ex.Message}";
+            return report;
+        }
     }
 }

@@ -1,18 +1,36 @@
+using SQLite;
+
 namespace RestoGestApp.Models;
+
+public enum ReportType
+{
+    Sales,
+    Inventory,
+    CustomerActivity
+}
 
 public class Report
 {
-    public DateTime Date { get; set; } = DateTime.Now;
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
     
-    public decimal TotalRevenue { get; set; }
+    public DateTime StartDate { get; set; }
     
-    public int TotalOrders { get; set; }
+    public DateTime EndDate { get; set; }
     
-    public int TotalReservations { get; set; }
+    public DateTime GeneratedDate { get; set; }
     
-    public Dictionary<string, decimal> RevenueByCategory { get; set; } = new Dictionary<string, decimal>();
+    public ReportType Type { get; set; }
     
-    public Dictionary<string, int> OrdersByStatus { get; set; } = new Dictionary<string, int>();
+    public decimal TotalSales { get; set; }
     
-    public List<MenuItemModel> TopSellingItems { get; set; } = new List<MenuItemModel>();
+    public int OrderCount { get; set; }
+    
+    public decimal AverageOrderValue { get; set; }
+    
+    public List<string> TopSellingItems { get; set; } = new List<string>();
+    
+    public List<string> TopCustomers { get; set; } = new List<string>();
+    
+    public string Notes { get; set; } = string.Empty;
 }

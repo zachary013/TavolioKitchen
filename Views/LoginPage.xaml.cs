@@ -18,7 +18,19 @@ public partial class LoginPage : ContentPage
         base.OnAppearing();
         
         // Reset fields when page appears
-        _viewModel.Username = string.Empty;
+        _viewModel.Email = string.Empty;
         _viewModel.Password = string.Empty;
+    }
+    
+    // Prevent back navigation if this is the initial page
+    protected override bool OnBackButtonPressed()
+    {
+        // If we're on the login page and not logged in, don't allow back navigation
+        if (!_viewModel.IsLoggedIn)
+        {
+            return true; // Cancel the back button
+        }
+        
+        return base.OnBackButtonPressed();
     }
 }
